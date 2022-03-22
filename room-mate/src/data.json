@@ -1,0 +1,54 @@
+[
+    {
+      "region_id":1,
+      "id": 1,
+      "name": "Fulgazi"
+    },
+    {
+      "region_id":1,
+      "id": 2,
+      "name": "Chagolnayaa"
+    },
+    {
+      "region_id":2,
+      "id": 3,
+      "name": "Porshuram"
+    },
+    {
+      "region_id":2,
+      "id": 4,
+      "name": "Sonagazi"
+    },
+    {
+      "region_id":3,
+      "id": 5,
+      "name": "Dhagonbhuyaan"
+    },
+    {
+      "region_id":3,
+      "id": 6,
+      "name": "Kobirhat"
+    },
+    {
+      "region_id":4,
+      "id": 7,
+      "name": "Kompanigonj"
+    },
+    {
+      "region_id":4,
+      "id": 8,
+      "name": "Sonaimuri"
+    },
+    {
+      "region_id":5,
+      "id": 9,
+      "name": "Begamgonj"
+    },
+    {
+      "region_id":5,
+      "id": 10,
+      "name": "Dhaka"
+    }
+    
+    
+  ]

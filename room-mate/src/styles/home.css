@@ -1,0 +1,27 @@
+body{
+    margin:auto;
+    font-family: 'Poppins', sans-serif;;
+}
+.header-section{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto 1fr 60vh;
+    background-image: url('../images/bg1.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
+
+.nav-bar{
+    width: 90%;
+    margin: auto;
+}
+.hero-bar{
+    justify-content: center; 
+    align-items: center;
+}
+.testimonial-section{
+    justify-content: space-between;
+    position: relative;
+    background-color: #F8FAFF;
+  }

@@ -1,0 +1,21 @@
+.ads-list-section{
+    display: flex;
+}
+.ads-body .ads-pic{
+    width: 30%;
+    margin-right: 8px;
+}
+.ads-body:hover{
+    background-color: aqua;
+}
+.ads-body .ads-desc{
+    width: 70%;
+}
+.ads-desc span{
+    color:grey;
+    font-size: 1rem;
+    font-weight: normal;
+}
+.ads-body{
+    padding: 10px;
+}

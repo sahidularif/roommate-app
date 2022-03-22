@@ -1,0 +1,172 @@
+.login-section{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #F8FAFF;
+}
+.log-wrapper{
+    margin: auto;
+    /* padding-top: 200px; */
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* border: 1px solid black; */
+}
+.flatation{
+    background-color: #fff;
+    width: 100%;    
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin: auto;
+    padding: 50px;
+}
+.flat-img{
+    background-image: url('../images/log-bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+}
+.log-container{
+    border: 1px solid white;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 50px;
+}
+.log-body{
+    width: 100%;
+    margin: auto;
+}
+.login-swithcer strong{
+    cursor: pointer;
+}
+.social-log .google div{
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    justify-content: space-between;
+}
+.google div span{
+    padding: 0 40px;
+}
+.google{
+    border: none;
+    background: #f85959;
+    color: #fff;
+}
+.social-log button{ 
+    border: none;
+    margin-right: 10px;
+    padding: 0px 15px;
+    border-radius: 5px;
+}
+.social-log{
+    display: flex;
+}
+.input-filds{
+    padding: 10px 0;
+}
+.input-filds input{
+    border: 1px solid powderblue;
+    /* background-color: rgb(252, 241, 241); */
+    border-radius: 3px;
+    height: 35px;
+    width: 93%;
+}
+.input-filds .single-fild{
+    margin-right: 10px;
+}
+.single-fild input{
+    margin-right: 10px;
+    border:1px solid powderblue;
+    /* background-color: rgb(252, 241, 241); */
+    border-radius: 3px;
+    height: 35px;
+    width: 240px;
+}
+.input-filds label{
+    font-weight: 500;
+    font-size: 15px;
+}
+.input-check{
+    display: flex;
+    font-size: 14px;
+    padding: 10px 0;
+    align-items: center;
+}
+.input-check input{
+    margin-right: 10px;
+}
+.single-fild button{
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50px;
+    border:1px groove #f85959;
+    background: #f85959;
+    color: #fff;
+}
+.showError {
+    border-color: #a94442 !important;
+    color: #a94442 !important;
+    margin-bottom: 2px;
+  }
+.err-msg{
+    color: red;
+    font-size: 12px;
+    padding-bottom: 10px;
+}
+.user-type .house-seeker , .house-holder {    
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+    background-color:#fff;
+    margin-bottom: 20px;
+    height: 120px;
+    width: 300px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.user-type .house-seeker:hover , .house-holder:hover{
+    box-shadow: 0px 2px 5px 0px rgba(214, 9, 9, 0.5);
+    background-color: #fff;
+}
+.userType-flatation{
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    width: 80%;
+    display: flex;
+    padding: 100px;
+    justify-content: space-around;
+    border-radius: 15px;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 2px 5px 0px rgba(95, 95, 128, 0.3);
+    background-color: #fff;
+    opacity: .9;
+    /* background-image: url('../images/bg1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center; */
+   
+  }
+  .userType-section{
+    display: flex;    
+    width: 100%;
+    justify-content: space-between;
+    background-image: url('../images/bg2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    background-color: #F8FAFF;
+  }
+  .login-btn {
+      border: none;
+      background-color: transparent;
+      font-weight: bold;
+  }
