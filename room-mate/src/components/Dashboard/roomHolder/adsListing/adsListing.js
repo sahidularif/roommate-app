@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { React, useState, useEffect } from 'react';
+import { Redirect, useHistory } from 'react-router-dom';
 import img from "../../../../images/bg1.jpg"
 import '../../../../styles/dashboard.css'
 
 const AdsListing = () => {
 
     const [ads, setAds] = useState([])
+    const history = useHistory();
 
     useEffect(() => {
         axios.get(`http://localhost:5000/api/find_rooms`)
@@ -15,13 +17,14 @@ const AdsListing = () => {
     }, [])
     // console.log(ads);
 
+    
     return (
         <div className='ads-list-section'>
             <div className='ads-list-body'>
                 {
                     ads.map((ad) => {
                         return (
-                            <div className='ads-body d-flex'>
+                            <div className='ads-body d-flex' onClick={()=> history.push(`/edit/${ad._id}`)}>
                                 <div className='ads-pic'>
                                     <img src={ad.img_collection[1]} className="img-fluid rounded " alt="..." />
                                 </div>

@@ -1,21 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap');
+
 body{
     margin:auto;
-    font-family: 'Poppins', sans-serif;;
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
 }
-.header-section{
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto 1fr 60vh;
-    background-image: url('../images/bg1.jpg');
+.top-section{
+    background-color: black;
+    background-image: url('../images/bg2.jpg');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;    
+    min-height: 100vh;
+    /* position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; */
+    /* max-height: 100vh; */
+    background-size: cover; 
 }
 
-.nav-bar{
+/* .nav-bar{
     width: 90%;
     margin: auto;
-}
+} */
 .hero-bar{
     justify-content: center; 
     align-items: center;
@@ -23,5 +31,5 @@ body{
 .testimonial-section{
     justify-content: space-between;
     position: relative;
-    background-color: #F8FAFF;
+    background-color: #fff;
   }

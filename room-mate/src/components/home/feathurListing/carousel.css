@@ -19,6 +19,12 @@
   border-bottom-left-radius: 7px;
   border-top-left-radius: 7px;
 }
+.carousel .heading-section{
+  /* border: 1px solid black; */
+  margin-left: 0px; 
+  padding-left: 0px; 
+  margin-bottom: 150px !important;
+}
 .slick-prev::before,
 .slick-next::before {
   display: none;

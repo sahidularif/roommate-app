@@ -13,29 +13,40 @@ import BookData from '../data.json';
 import axios from 'axios';
 const Home = () => {
     const [data, setData] = useState([])
-useEffect(()=>{
-    axios.get('http://localhost:5000/api/find_rooms')
-        // .then((res)=> JSON.parse(res))
-        .then((res)=>{
-            setData(res.data)
-            console.log(res.data)
-        })
-},[])
+    useEffect(() => {
+        axios.get('http://localhost:5000/api/find_rooms')
+            // .then((res)=> JSON.parse(res))
+            .then((res) => {
+                setData(res.data)
+                console.log(res.data)
+            })
+    }, [])
     return (
         <>
             <section className="top-section">
-                <div className="header-section">
-                    <div className="top-bar">
-                        <Header />
-                    </div>
-                    <div className="nav-bar">
-                        <Navbar />
-                    </div>
-                    <div className="hero-bar text-center justify-content-center">
-                        <HeroSection data={BookData} />
-                    </div>
-                </div>
+                {/* <Header /> */}
+                <Navbar />
+                <HeroSection data={BookData} />
             </section>
+            <section className="service-section">
+                <Services />
+            </section>
+            <section className="testimonial-section">
+                <Testimonial />
+            </section>
+            <section>
+                <FeatherListing />
+            </section>
+            <section>
+                <AddListing />
+            </section>
+            <section>
+                <Subscribe />
+            </section>
+            <section>
+                <Footer />
+            </section>
+            {/*
             <section className="service-section">
                 <Services />
             </section>
@@ -67,7 +78,7 @@ useEffect(()=>{
             </section>
             <section>
                 <Footer />
-            </section>
+            </section> */}
         </>
     );
 };

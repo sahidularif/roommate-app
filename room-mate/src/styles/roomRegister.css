@@ -59,6 +59,8 @@
     width: 75%;
     background-color: #fff;
     padding: 50px;
+    height: 100vh;
+    overflow-x: visible;
 }
 
 .field{
@@ -214,7 +216,6 @@
     border: 1px solid black;
 }
 .footer-form{
-    position: absolute;
     display: flex;
     flex-direction: row;
     width: 58%;

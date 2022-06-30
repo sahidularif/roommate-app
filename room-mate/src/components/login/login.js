@@ -11,8 +11,7 @@ import {
     createNewUserWithEmailAndPassword,
     handleGoogleSignIn,
     signInExistingUserWithEmailAndPassword
-}
-    from './loginHelper';
+} from './loginHelper';
 import { formValidation } from '../../utilities/helperFunction';
 import { auth } from './firebaseConfig';
 import axios from 'axios';
@@ -34,6 +33,7 @@ export const isLoggedIn = () => {
 const Login = () => {
     const [loggedInUser, setLoggedInUser] = useContext(LoginContext);
     const [userAction, setUserAction] = useContext(UserActionContext); // ** Replacing  [newUser, setNewUser]
+    // const [id, setId] = useContext(IdContext); // ** Replacing  [newUser, setNewUser]
     // const [newUser, setNewUser] = useState(false);
     const [user, setUser] = useState({
         isSignedIn: false,
@@ -52,7 +52,7 @@ const Login = () => {
     const location = useLocation();
 
     const { from } = location.state || {
-        from: { pathname: '/' },
+        from: { pathname: '/user' },
     };
     const { login } = { login: { pathname: '/login' } }
     const { userType } = { userType: { pathname: '/userType' } }
@@ -80,7 +80,7 @@ const Login = () => {
                 signInExistingUserWithEmailAndPassword(user)
                     .then((res) => {
                         handleResponse(res, true)
-                        console.log(res)
+                        // console.log(res)
                     })
             }
         }
@@ -95,7 +95,8 @@ const Login = () => {
         } else {
 
             setUser(res);
-            setLoggedInUser(res)
+            // console.log(res.user);
+            setLoggedInUser(res.user)
             storeAuthToken(res);
             redirect && history.replace(from);
             userAction.newUser && setError('');
@@ -121,16 +122,16 @@ const Login = () => {
             })
             .catch(function (err) {
                 // Handle error
-                console.log(err)
+                // console.log(err)
             });
     };
 
-
+// console.log(userAction)
     return (
         <div className="login-section">
             {/* <div className="log-wrapper"> */}
-            <div className="flatation pt-5">
-                <div className="about-us heading-section pt-5">
+            <div className="flatation">
+                <div className="about-us heading-section ">
                     <h2 class="pt-4"><strong>RenterBD</strong></h2>
                 </div>
                 <span class="subheading">your amazing room and roommate</span>
@@ -145,7 +146,7 @@ const Login = () => {
                             {!userAction.newUser ? ' Sign up' : ' Sign in'}
                         </button>
                     </p></div>
-                <div className="log-body pt-5">
+                <div className="log-body">
                     <div class="heading-section text-start">
                         <h2 class="mb-4">{!userAction.newUser ? 'Sign in' : 'Sign up'}</h2>
                     </div>

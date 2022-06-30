@@ -1,0 +1,118 @@
+.subscription-section {
+    /* background-color: #F7F7F7; */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.subscription-section .subscribe {
+    margin: auto;
+    padding: 150px 0 150px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    column-gap: 3rem;
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+    text-align: center;
+    align-self: center;
+}
+
+.subscription-section .subscribe .heading-section h2,
+.subscription-section .subscribe .heading-section p {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.subscribe .subscribe-body {
+    width: 100%;
+}
+
+@media (max-width: 576px) {
+    .subscribe {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        row-gap: 1rem;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .subscribe-body {
+        width: 100%;
+    }
+
+    .subscription-section .subscribe .heading-section {
+        width: 80%;
+    }
+
+    .subscription-section .subscribe .heading-section h2,
+    .subscription-section .subscribe .heading-section p {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .input-field input[type="text"] {
+        /* background-color: white; */
+        width: 200px;
+
+    }
+}
+
+
+@media (max-width: 320px) {
+
+    .subscribe .subscribe-body .input-field input[type="text"] {
+        max-width: 150px;
+    }
+
+    .subscribe .subscribe-body .input-field input[type="submit"] {
+        max-width: 120px;
+        flex: start;
+        min-height: 63px;
+    }
+
+    .subscribe .subscribe-body .input-field {
+        justify-content: center;
+    }
+
+}
+
+
+.subscribe .subscribe-body .input-field {
+    display: flex;
+    color: grey;
+    flex-direction: row;
+    justify-content: center;
+    min-width: 100%;
+}
+
+.subscribe .subscribe-body .input-field input[type="text"] {
+    background-color: white;
+    width: 30%;
+    min-height: 50px;
+    border: none;
+    padding: 10px 10px;
+    font-family: var(--ff-poppins);
+    font-size: 15px;
+    align-items: center;
+    border: 1px solid black;
+}
+
+.subscribe .subscribe-body .input-field button {
+    background-color: #1E306E;
+    color: white !important;
+    border: none;
+    width: auto;
+    padding: 0 10px;
+    font-family: var(--ff-poppins);
+    font-size: 15px;
+}
+
+.subscribe .subscribe-body .input-field input[type="text"]:active {
+    border: 1px solid black;
+}

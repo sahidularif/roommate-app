@@ -5,13 +5,29 @@ import matchIcon from "../../../images/services/match.png";
 import verifyIcon from "../../../images/services/verifide.png";
 
 const Services = () => {
+  function reveal() {
+    var reveals = document.querySelectorAll(".reveal");
+    for (var i = 0; i < reveals.length; i++) {
+      var windowHeight = window.innerHeight;
+      var elementTop = reveals[i].getBoundingClientRect().top;
+      var elementVisible = 150;
+  
+      if (elementTop < windowHeight - elementVisible) {
+        reveals[i].classList.add("active");
+      } else {
+        reveals[i].classList.remove("active");
+      }
+    }
+  }
+  
+  window.addEventListener("scroll", reveal);
 
   return (
     <>
-       <section class="ftco-section services-section bg-light">
+       <section class="ftco-section services-section">
         <div class="container">
           <div class="row d-flex justify-content-between">
-            <div class="col-md-4 align-self-stretch ftco-animate">
+            <div class="col-md-4 align-self-stretch ftco-animate reveal">
               <div class="media block-6 services d-block text-center">
                 <div class="d-flex justify-content-center"><img src={matchIcon} className="img-fluid" alt="" /></div>
                 <div class="media-body p-2 mt-2">
@@ -20,7 +36,7 @@ const Services = () => {
                 </div>
               </div>
             </div>
-            <div class="col-md-4 align-self-stretch ftco-animate">
+            <div class="col-md-4 align-self-stretch ftco-animate reveal">
               <div class="media block-6 services d-block text-center">
                 <div class="d-flex justify-content-center"><img src={safe} className="img-fluid" alt="" /></div>
                 <div class="media-body p-2 mt-2">
@@ -29,7 +45,7 @@ const Services = () => {
                 </div>
               </div>
             </div>
-            <div class="col-md-4 align-self-stretch ftco-animate">
+            <div class="col-md-4 align-self-stretch ftco-animate reveal">
               <div class="media block-6 services d-block text-center">
                 <div class="d-flex justify-content-center"><img src={verifyIcon} className="img-fluid" alt="" /></div>
                 <div class="media-body p-2 mt-2">

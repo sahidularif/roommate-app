@@ -8,9 +8,11 @@ import { roomRentFirstStepValidation, roomRentSecondStepValidation } from '../..
 import Navbar from '../home/header/navBar';
 import { LoginContext } from '../../App';
 import UserProfileSection from '../roommateFindAd/userProfileSection';
+import { useParams } from 'react-router-dom';
 
 //::::::::::::ROOMMATEFINDADD::::::::::::::
 const EditRoom = () => {
+    const { _id } = useParams()
     const fileInputRef = useRef();
     const [errorMessage, setErrorMessage] = useState({
         formErrors: {}
@@ -37,39 +39,12 @@ const EditRoom = () => {
             '3 month', '6 month', '1 year'
         ],
     }
-    const [data, setData] = useState([
-        // {
-        //     region: null, city: null, state: null, zip: null, rent: null, deposit: null,
-        //     date: null, description: null, special: null, roomType: null, room: null, 
-        //     bed: null, bath: null, minStay: null, maxStay: null,
-        //     utilities: [
-        //         {
-        //             fontAwesome: 'fad fa-bolt',
-        //             isChecked: false,
-        //             text: 'Electricity',
-        //         },
-        //         {
-        //             fontAwesome: 'far fa-burn',
-        //             isChecked: false,
-        //             text: 'Gas',
-        //         },
-        //         {
-        //             fontAwesome: 'fad fa-water',
-        //             isChecked: false,
-        //             text: 'Water',
-        //         },
-        //         {
-        //             fontAwesome: 'far fa-tv-retro',
-        //             isChecked: false,
-        //             text: 'Tv',
-        //         },
-        //     ],
-
-        // }
-    ])
+    const [data, setData] = useState([])
 
     const [firstStep, setFirstStep] = useState({
         isChecked: true,
+        title: null,
+        description: null,
         region: null,
         city: null,
         state: null,
@@ -77,13 +52,11 @@ const EditRoom = () => {
         rent: null,
         deposit: null,
         date: null,
-        description: null,
-        special: null,
         formErrors: {},
     });
     const [secondStep, setSecondStep] = useState({
         isChecked: false,
-        roomType: null,
+        houseType: null,
         room: null,
         bed: null,
         bath: null,
@@ -173,19 +146,24 @@ const EditRoom = () => {
                 fontAwesome: 'fad fa-fan',
             },
         ],
+        img_collection: [],
     });
-
-
+    // for creating file
+    function blobToFile(theBlob, fileName) {
+        return new File([theBlob], fileName, { lastModified: new Date().getTime(), type: theBlob.type })
+    }
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/find_room/62334a67f5a0e18b08f121dc`)
+        axios.get(`http://localhost:5000/api/find_room/${_id}`)
             .then((res) => {
                 const data = res.data;
-                const { roomType, room, bed, bath, minStay, maxStay, utilities, amenities } = data;
-                const {region, city, state, zip, rent, deposit, date, description, specialization,} = data; 
+                setData(data)
+                const { houseType, room, bed, bath, minStay, maxStay, } = data;
+                const {title, region, city, state, zip, rent, deposit, date, description, } = data;
+
                 setSecondStep(current => (
                     {
-                        ...current, 
-                        roomType: roomType,
+                        ...current,
+                        houseType: houseType,
                         room: room,
                         bed: bed,
                         bath: bath,
@@ -195,7 +173,8 @@ const EditRoom = () => {
                 ))
                 setFirstStep(current => (
                     {
-                        ...current, 
+                        ...current,
+                        title: title,
                         region: region,
                         city: city,
                         state: state,
@@ -204,18 +183,36 @@ const EditRoom = () => {
                         deposit: deposit,
                         date: date,
                         description: description,
-                        special: specialization,
-                        // special: specialization,
-                        
+
                     }
                 ))
 
-                setData(res.data)
-            })
-    }, [])
 
-    const dd = new Date(data.date);
-    // console.log(secondStep)
+            })
+    }, []);
+
+    const urlToFile = (data) => {
+        const imgFile = [];
+        data.img_collection?.forEach((img) => {
+            const filename = img.slice(55)
+            fetch(`${img}`)
+                .then(async res => {
+                    const blob = await res.blob();
+                    const file = new File([blob], filename, { type: blob.type })
+                    imgFile.push(file)
+                })
+
+        })
+        setSecondStep(current => ({ ...current, img_collection: imgFile }))
+        setSelectedFiles(imgFile)
+
+    }
+    useEffect(() => {
+        urlToFile(data)
+
+    }, [data])
+    const dd = Date.now() + '-' + Math.floor(Math.random() * 1000);
+
     const utilitiesCheckboxChange = (i) => {
         const newUtility = secondStep.utilities[i];
         newUtility.isChecked = !newUtility.isChecked
@@ -243,7 +240,7 @@ const EditRoom = () => {
     }
     const [startDate, setStartDate] = useState(new Date());
     const [highlighted, setHighlighted] = useState(false)
-    console.log(startDate);
+    // console.log(startDate);
     const preventDefault = (e) => {
         e.preventDefault();
     }
@@ -319,6 +316,7 @@ const EditRoom = () => {
             });
 
     }, []);
+
     useEffect(() => {
 
         axios.get(`https://bdapis.herokuapp.com/api/v1.1/division/${division ? division : firstStep.region}`)
@@ -326,12 +324,16 @@ const EditRoom = () => {
 
     }, [division || firstStep.region]);
 
+    const imgURLDef = secondStep.isChecked || selectedFiles
     useEffect(() => {
+
         if (selectedFiles.length < 1) return;
         let newImageUrls = [];
         selectedFiles.forEach(image => newImageUrls.push(URL.createObjectURL(image)));
         setImagesURLs(newImageUrls);
-    }, [selectedFiles])
+
+    }, [imgURLDef])
+
     const handleBackButtonClick = () => {
         if (!firstStep.isChecked && secondStep.isChecked) {
             setFirstStep(current => ({ ...current, isChecked: true }))
@@ -352,7 +354,7 @@ const EditRoom = () => {
         const m = selectedFiles.filter((item, index) => index !== e);
         setImagesURLs(s);
         setSelectedFiles(m);
-        console.log(s);
+        // console.log(s);
     }
     function filteredItems(data) {
         const checkedItems = data.filter(item => {
@@ -363,23 +365,22 @@ const EditRoom = () => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         console.log('handle form click');
-
+        let formData = new FormData();
         const utilities = filteredItems(secondStep.utilities)
         const amenities = filteredItems(secondStep.amenities)
-        // console.log(utilities)
-
-        let formData = new FormData();
 
         for (let i = 0; i < selectedFiles.length; i++) {
             formData.append('files', selectedFiles[i]);
         }
-        for (let i = 0; i < utilities.length; i++) {
-            formData.append('utilitis', utilities[i]);
-        }
-        for (let i = 0; i < amenities.length; i++) {
-            formData.append('amenities', amenities[i]);
-        }
 
+        amenities.forEach(item => {
+            formData.append(`amenities[]`, JSON.stringify(item));
+        });
+        utilities.forEach(item => {
+            formData.append(`utilities[]`, JSON.stringify(item));
+        });
+
+        formData.append('title', firstStep.region);
         formData.append('region', firstStep.region);
         formData.append('city', firstStep.city);
         formData.append('state', firstStep.state);
@@ -388,24 +389,20 @@ const EditRoom = () => {
         formData.append('deposit', firstStep.deposit);
         formData.append('date', firstStep.date);
         formData.append('description', firstStep.description);
-        formData.append('specialization', firstStep.special);
 
-        formData.append('roomType', secondStep.roomType);
+        formData.append('houseType', secondStep.houseType);
         formData.append('room', secondStep.room);
         formData.append('bed', secondStep.bed);
         formData.append('bath', secondStep.bath);
         formData.append('minStay', secondStep.minStay);
         formData.append('maxStay', secondStep.maxStay);
-
-
-        await fetch('http://localhost:5000/api/addRoom', {
-            method: 'POST',
+        await fetch(`http://localhost:5000/api/updateRoom/${_id}`, {
+            method: 'PUT',
             body: formData,
 
         })
             .then((response) => console.log(response))
             .catch((error) => console.log(error))
-        // console.log(secondStep);
 
     }
 
@@ -421,11 +418,7 @@ const EditRoom = () => {
         let data = { ...firstStep };
         data[e.target.name] = e.target.value;
         setFirstStep(data);
-        console.log(data);
     }
-    console.log(data);
-    console.log(firstStep);
-    console.log(secondStep);
     return (
         <div className="room-registration-form p-3">
             <div className="bg-danger">
@@ -596,18 +589,18 @@ const EditRoom = () => {
                                         <div className="col-md">
                                             <div className="form cf">
                                                 <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                                    <input type="radio" onChange={secondeStepInputChange} className="btn-check" value="entire" name="roomType" id="btnradio1" autoComplete="off" />
+                                                    <input type="radio" onChange={secondeStepInputChange} className="btn-check" value="entire" name="houseType" id="btnradio1" autoComplete="off" />
                                                     <label className="btn btn-outline-secondary" htmlFor="btnradio1"><h1><MdHouseboat /></h1> Entire Place</label>
 
-                                                    <input type="radio" onChange={secondeStepInputChange} className="btn-check" value="private" name="roomType" id="btnradio2" autoComplete="off" />
+                                                    <input type="radio" onChange={secondeStepInputChange} className="btn-check" value="private" name="houseType" id="btnradio2" autoComplete="off" />
                                                     <label className="btn btn-outline-secondary" htmlFor="btnradio2"><h1><MdApartment /></h1> Private Room</label>
 
-                                                    <input type="radio" onChange={secondeStepInputChange} className="btn-check" value="share" name="roomType" id="btnradio3" autoComplete="off" />
+                                                    <input type="radio" onChange={secondeStepInputChange} className="btn-check" value="share" name="houseType" id="btnradio3" autoComplete="off" />
                                                     <label className="btn btn-outline-secondary" htmlFor="btnradio3"><h1><MdHouse /></h1> Shared Room</label>
                                                 </div>
                                             </div>
-                                            {errorMessage.formErrors.roomTypeErr &&
-                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.roomTypeErr}</div>
+                                            {errorMessage.formErrors.houseTypeErr &&
+                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.houseTypeErr}</div>
                                             }
                                         </div>
                                     </div>
@@ -811,7 +804,7 @@ const EditRoom = () => {
                                                 return (
                                                     <div className="display-image">
                                                         <img src={image} className="img-fluid" width="180px" alt="" />
-                                                        <div className=""><i className="fad fa-backspace" onClick={() => deleteFile(index)}></i></div>
+                                                        <div className=""><i className="fad fa-backspace" onClick={() => deleteFile(index)}>x</i></div>
                                                     </div>
                                                 )
                                             })

@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const addRoom = new Schema({
+    title: String,
+    description: String,
     region: String,
     city: String,
     state: String,
@@ -9,9 +11,7 @@ const addRoom = new Schema({
     rent: Number,
     deposit: Number,
     date: Date,
-    description: String,
-    specialization: String,
-    roomType: String,
+    houseType: String,
     room: Number,
     bed: Number,
     bath: Number,

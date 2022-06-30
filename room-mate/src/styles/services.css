@@ -21,6 +21,8 @@
   --danger: #dc3545;
   --light: #f8f9fa;
   --dark: #343a40;
+  --color-font: #215374;
+  --color-div: #1E306E;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -177,15 +179,18 @@ body {
     max-width: 33%; 
   }
 }
+.services-section{
+  background-color:#fff;
+}
 .services-section .container {
   margin-top: -130px;
   z-index: 2;
   position: relative; }
 
 .services {
-  background: #fff;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  background: #F8FAFF;
+  /* border-top-left-radius: 10px;
+  border-top-right-radius: 10px; */
   -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.03);
   -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.03);
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.03);
@@ -197,24 +202,26 @@ body {
   transition: all 0.3s ease;
   min-height: 400px;
  }
-  .services .icon {
+.services .icon {
     line-height: 1.3;
     position: relative; }
-    .services .icon span {
+.services .icon span {
       font-size: 60px;
       color: #f85959; }
 .services .media-body h3 {
-    font-size: 20px; }
+    font-size: 20px; color: hsl(38, 8%, 8%) }
 .services .media-body p {
     font-size: 15px; 
-    color: gray;
+    color: var(--dark);
 }
-  .services:hover {
-    background: #f85959;
-    color: #fff; }
-    .services:hover .icon span {
+.services:hover {
+    background: var(--color-font);
+    color: #fff !important; }
+.services:hover .icon span {
       color: #fff; }
-    .services:hover h3 {
+.services:hover h3 {
+      color: #fff; }
+.services:hover p {
       color: #fff; }
 .services img{
   width: 50%;
@@ -229,4 +236,15 @@ body {
     .ftco-section .container-fluid {
       padding: 0 4em; 
   } 
+}
+.reveal{
+  position: relative;
+  transform: translateY(150px);
+  opacity: 0;
+  transition: 1s all ease;
+}
+
+.reveal.active{
+  transform: translateY(0);
+  opacity: 1;
 }

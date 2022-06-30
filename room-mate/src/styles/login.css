@@ -5,6 +5,41 @@
     justify-content: space-between;
     background-color: #F8FAFF;
 }
+@media screen and (max-width: 650px) {
+    .login-section{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: #F8FAFF;
+    
+    }
+    .flatation{
+        padding-top: 1rem;
+        margin: 0 auto;
+        background-color: #a94442;
+        height: 100%;
+    }
+    .flatation .heading-section{
+        padding-top: 1rem;
+    }
+    .log-container{
+        height: auto;
+        margin:0 auto;
+    }
+    .log-container .log-body{
+        padding-top: 1rem;
+    }
+    .log-container .log-body .social-log{
+       display: flex;
+       flex-direction: column;
+       row-gap: 1rem;
+       width: 100%;
+    }
+    .log-container .log-body .social-log button{
+        width: 100%;
+        padding: 10px;
+    }
+  }
 .log-wrapper{
     margin: auto;
     /* padding-top: 200px; */
@@ -23,6 +58,7 @@
     height: 100vh;
     margin: auto;
     padding: 50px;
+    padding-top: 5rem;
 }
 .flat-img{
     background-image: url('../images/log-bg.png');
@@ -36,9 +72,11 @@
     width: 100%;
     background-color: #ffffff;
     padding: 50px;
+    padding-top: 5rem;
 }
-.log-body{
+.log-container .log-body{
     width: 100%;
+    padding-top: 5rem;
     margin: auto;
 }
 .login-swithcer strong{

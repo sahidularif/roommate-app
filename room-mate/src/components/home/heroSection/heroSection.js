@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../../styles/header.css';
+import './../../../styles/herosection.css';
 import { FaBeer } from 'react-icons/fa';
 const HeroSection = ({ data }) => {
     const [filteredData, setFilteredData] = useState([]);
@@ -22,50 +22,67 @@ const HeroSection = ({ data }) => {
         console.log('clicked');
         console.log(wordEntered);
     }
+    function reveal() {
+        var reveals = document.querySelectorAll(".search-tag");
+        for (var i = 0; i < reveals.length; i++) {
+          var windowHeight = window.innerHeight;
+          var elementTop = reveals[i].getBoundingClientRect().top;
+          var elementVisible = 150;
+      
+          if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add("active");
+          } 
+        }
+      }
+      
+      window.addEventListener("scroll", reveal);
     return (
-        <div className="hero-section justify-content-center align-items-center my-auto">
+        <div className="hero-section">
             <div className="heading-section">
                 <h1 className=""><strong>Find</strong><br /> your amazing room and roommate</h1>
             </div>
-            <div class="search-bar">
-                <form onSubmit={handleFormSubmit}>
-                    <div class="input-fields">
-                        <div class="textfield-search">
-                            <input type="text" class="input-text" placeholder="Enter city or zipcode"
-                                value={wordEntered}
-                                onChange={handleFilter}
-                            />
-                            <div className="autocomplete">
-                                {filteredData.length !== 0 && (
-                                    <div className="dataResult">
-                                        {filteredData.slice(0, 15).map((value, key) => {
-                                            return (
 
-                                                <p onClick={() => {
-                                                    setWordEntered(value.name);
-                                                    setFilteredData([]);
-                                                }}>
-                                                    {value.name}
-                                                </p>
+            <form onSubmit={handleFormSubmit} className="justify-content-center align-items-center">
+                <div className="app__search">
+                    <div className="app__search-text">
+                        <input type="text" className="input_text" placeholder="Enter city or zip code"
+                            value={wordEntered}
+                            onChange={handleFilter}
+                        />
+                        <div className="autocomplete">
+                            {filteredData.length !== 0 && (
+                                <div className="dataResult">
+                                    {filteredData.slice(0, 15).map((value, key) => {
+                                        return (
 
-                                            );
-                                        })}
-                                    </div>
-                                )}
-                            </div>
+                                            <p onClick={() => {
+                                                setWordEntered(value.name);
+                                                setFilteredData([]);
+                                            }}>
+                                                {value.name}
+                                            </p>
+
+                                        );
+                                    })}
+                                </div>
+                            )}
                         </div>
-                        <button type="submit" className="search-submit" ><i class="far fa-search" /> Search</button>
                     </div>
-                </form>
+                    <button type='submit' className="app__search-submit" >
+                        {/* <i className="far fa-search" />  */}
+                        Search
+                    </button>
+                </div >
+            </form>
 
-            </div >
-            <div className="search-tag">
+
+            <div className="d-block search-tag justify-content-center align-items-center">
                 <h1>Or browse the highlights</h1>
-                <div className="tag-btn">
-                    <button class="tag-btn-btn"><i class="far fa-bed"></i> Private room</button>
-                    <button class="tag-btn-btn"><i class="fal fa-hotel"></i> Hotel</button>
-                    <button class="tag-btn-btn"><i class="fal fa-building"></i> Apartment</button>
-                    <button class="tag-btn-btn"><i class="fal fa-parking"></i> Parking</button>
+                <div className="tag-btn justify-content-center align-items-center">
+                    <button className="tag-btn-btn"><i className="far fa-bed"></i> Private room</button>
+                    <button className="tag-btn-btn"><i className="fal fa-hotel"></i> Hotel</button>
+                    <button className="tag-btn-btn"><i className="fal fa-building"></i> Apartment</button>
+                    <button className="tag-btn-btn"><i className="fal fa-parking"></i> Parking</button>
                 </div>
             </div>
         </div >

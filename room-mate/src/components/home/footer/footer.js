@@ -2,7 +2,7 @@ import React from 'react';
 import { FaFacebook, FaGoogle, FaInstagram } from 'react-icons/fa';
 import brand from '../../../images/footer-bg.png';
 import { Link } from 'react-router-dom';
-
+import '../../../styles/addListing.css'
 const Footer = () => {
 
 

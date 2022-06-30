@@ -8,7 +8,7 @@ const DashboardLayout = (props) => {
 
     return (
         <>
-            <div className="bg-danger">
+            <div className="">
                 <div className="nav-bar">
                     <Navbar />
                 </div>

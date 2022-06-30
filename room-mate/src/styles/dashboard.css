@@ -19,3 +19,109 @@
 .ads-body{
     padding: 10px;
 }
+.wrapper {
+    display: grid;
+    grid-template-rows: 80px 1000px 209px;
+    grid-template-columns: repeat(12, 1fr);
+    min-height: auto;
+}
+
+.header{
+    background-color: gray;
+    grid-column: 1/-1;
+    
+}
+.wrapper .content{
+    background-color: #F7F7F7;
+    /* grid-column: 1/4; */
+    /* border: 1px solid black; */
+}
+.wrapper .content .user-sidebar{
+    background-color: transparent;
+    justify-content: center;
+    text-align: center;
+}
+.wrapper .content .user-sidebar img{
+    width: 200px;
+}
+.footer{
+    background-color: yellow;
+    grid-column: 1/-1
+}
+.wrapper .content{
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 300px auto;
+    border: 1px solid white;
+    /* background-color: yellow; */
+}
+.rooms{
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 1px solid white;
+    justify-content: center;
+    align-items: center;
+}
+.wrapper .content .dashboard-user{
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    justify-content: end;
+    align-items: center;
+}
+
+.wrapper .content .dashboard-user form{
+    margin-bottom: 100px;
+}
+.user-profile-edit .row{
+    display: flex;
+}
+.dashboard-user .input-group label{
+    color: rgb(36, 36, 36);
+    font-weight: normal;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+.dashboard-user .input-group input, 
+.dashboard-user .input-group textarea, 
+.dashboard-user .input-group option, 
+.dashboard-user .input-group select {
+    color: rgb(72, 66, 75);
+    font-weight: 100;
+    font-size: 14px;
+    background-color: #F7F9FF;
+    border: 1px solid whitesmoke;
+}
+.dashboard-user form h5{
+    color: orange;
+}
+.dashboard-user .personal-details label{
+    font-weight:600;
+}
+.dashboard-user .personal-details, .roommate-preference{
+    border-radius: 15px;
+}
+.dashboard-user .about-user h6, .dashboard-user .roommate-preference label{
+    font-weight:600;
+}
+.dashboard-user .about-user span, .dashboard-user .roommate-preference span{
+    font-size: 14px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.about-user h5, .roommate-preference h5{
+    color:tan;
+}
+.btn-user-edit button{
+    justify-content: end;
+    align-self: flex-end;
+    align-items: flex-end;
+    color: navy;
+    background-color: white;
+    border: none;
+}

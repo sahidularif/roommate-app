@@ -1,29 +1,24 @@
 import React from 'react';
-// import '../../../styles/testimonial.css';
+import '../../../styles/addListing.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 const Subscribe = () => {
     return (
         <div className="subscription-section">
             <div className="subscribe">
                 <div className="about-us heading-section">
-                    <h2 class=""><strong>NEWSLETTER</strong></h2>
+                    <h2 class=""><strong>Subcribe to our Newsletter</strong></h2>
                     <p>Subscribe and get the latest news and useful tips, advice and best offer.</p>
 
                 </div>
 
-                <div className="subscribe-body">
-                    <div class="subscription-bar">
-                        <form class="">
-                            <div class="input-field pt-5">
-                                <div class="textfield-search">
-                                    <input type="text" class="input-text" placeholder="Enter your email" />
-                                </div>
-                                <button type="submit" className="search-submit">Subscribe</button>
-                            </div>
-
-                        </form>
+                <form class="subscribe-body">
+                    
+                    <div class="input-field">
+                        <input type="text" class="input-text" placeholder="Enter your email" />
+                        <button type="button" className="search-submit">Subscribe</button>
                     </div>
-                </div>
+
+                </form>
             </div>
         </div>
 

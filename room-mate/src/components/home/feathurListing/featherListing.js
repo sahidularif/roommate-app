@@ -10,7 +10,7 @@ const PreviousBtn = (props) => {
   const { className, onClick } = props;
   return (
     <div className={className} onClick={onClick}>
-      <FaArrowCircleLeft style={{ color: "#f85959", fontSize: "30px" }} />
+      <FaArrowCircleLeft style={{ color: "#1E306E", fontSize: "30px" }} />
     </div>
   );
 };
@@ -18,7 +18,7 @@ const NextBtn = (props) => {
   const { className, onClick } = props;
   return (
     <div className={className} onClick={onClick}>
-      <FaArrowCircleRight style={{ color: "#f85959", fontSize: "30px" }} />
+      <FaArrowCircleRight style={{ color: "#1E306E", fontSize: "30px" }} />
     </div>
   );
 };
@@ -60,7 +60,7 @@ const carouselProperties = {
 const FeatherListing = () => {
   return (
     <div style={{ margin: "60px" }} className="carousel">
-      <div class="col-md-7 heading-section ftco-animate mb-3">
+      <div class="col-md-7 heading-section ftco-animate mb-5">
         <span class="subheading">Special Offers</span>
         <h2 class="mb-5"><strong>Top</strong> Rooms</h2>
       </div>
@@ -88,7 +88,7 @@ const Card = ({ item }) => {
         }}
       />
       {/* <p style={{ fontSize: "14px", padding: "5px 0" }}>TOP TRNDING TVs</p> */}
-      <p style={{ fontSize: "16px", padding: "5px 0", color: "green" }}>
+      <p style={{ fontSize: "16px", padding: "5px 0", color: "black" }}>
         From ₹ 7,000
       </p>
       {/* <p style={{ fontSize: "14px", padding: "5px 0", color: "gray" }}>

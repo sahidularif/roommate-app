@@ -28,6 +28,8 @@ const RoommateFindAd = () => {
     const [district, setDistrict] = useState("");
     const [firstStep, setFirstStep] = useState({
         isChecked: true,
+        title: null,
+        description: null,
         region: null,
         city: null,
         state: null,
@@ -35,12 +37,10 @@ const RoommateFindAd = () => {
         rent: null,
         deposit: null,
         date: null,
-        description: null,
-        special: null,
         formErrors: {},
     });
     const [secondStep, setSecondStep] = useState({
-        isChecked: false, roomType: null, room: null, bed: null, bath: null,
+        isChecked: false, houseType: null, room: null, bed: null, bath: null,
         minStay: null, maxStay: null,
         utilities: [
             {
@@ -274,6 +274,8 @@ const RoommateFindAd = () => {
             formData.append(`utilities[]`, JSON.stringify(item));
         });
 
+        formData.append('title', firstStep.title);
+        formData.append('description', firstStep.description);
         formData.append('region', firstStep.region);
         formData.append('city', firstStep.city);
         formData.append('state', firstStep.state);
@@ -281,10 +283,8 @@ const RoommateFindAd = () => {
         formData.append('rent', firstStep.rent);
         formData.append('deposit', firstStep.deposit);
         formData.append('date', firstStep.date);
-        formData.append('description', firstStep.description);
-        formData.append('specialization', firstStep.special);
 
-        formData.append('roomType', secondStep.roomType);
+        formData.append('houseType', secondStep.houseType);
         formData.append('room', secondStep.room);
         formData.append('bed', secondStep.bed);
         formData.append('bath', secondStep.bath);
@@ -333,6 +333,36 @@ const RoommateFindAd = () => {
                             {
                                 firstStep.isChecked &&
                                 <div className="first-step">
+
+                                    <div className="row mb-3">
+
+                                        <div className="col-md">
+                                            <label for="description" className="form-label">Post title</label>
+                                            <input type="text" className="form-control" value={firstStep.title} onChange={(e) => setFirstStep(current => ({ ...current, title: e.target.value }))} name="description" id="title" />
+
+                                            {errorMessage.formErrors.descriptError &&
+                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.descriptError}</div>
+                                            }
+                                            {errorMessage.formErrors.descCharError &&
+                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.descCharError}</div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="row mb-3">
+
+                                        <div className="col-md">
+                                            <div className="mb-3">
+                                                <label for="description" className="form-label">Post description</label>
+                                                <textarea className="form-control" value={firstStep.description} onChange={(e) => setFirstStep(current => ({ ...current, description: e.target.value }))} name="description" placeholder="Descripton must be in 500 words." id="special" style={{ height: '100px' }}></textarea>
+                                            </div>
+                                            {errorMessage.formErrors.descriptError &&
+                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.descriptError}</div>
+                                            }
+                                            {errorMessage.formErrors.descCharError &&
+                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.descCharError}</div>
+                                            }
+                                        </div>
+                                    </div>
                                     <div className="heading-section">
                                         <h5 className=""><span className="subheading">Location</span></h5>
                                     </div>
@@ -433,64 +463,30 @@ const RoommateFindAd = () => {
                                             }
                                         </div>
                                     </div>
-                                    <div className="heading-section mt-5">
-                                        <h5 className=""><span className="subheading">Listing Description</span></h5>
-                                    </div>
-
-                                    <div className="row mb-3">
-
-                                        <div className="col-md">
-                                            <div className="form-floating">
-                                                <textarea className="form-control" value={firstStep.description} onChange={(e) => setFirstStep(current => ({ ...current, description: e.target.value }))} name="description" placeholder="Leave a comment here" id="special" style={{ height: '100px' }}></textarea>
-                                                <label htmlFor="description">What's make's the location special?</label>
-                                            </div>
-                                            {errorMessage.formErrors.descriptError &&
-                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.descriptError}</div>
-                                            }
-                                            {errorMessage.formErrors.descCharError &&
-                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.descCharError}</div>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className="row mb-3">
-
-                                        <div className="col-md">
-                                            <div className="form-floating">
-                                                <textarea className="form-control" value={firstStep.special} onChange={(e) => setFirstStep(current => ({ ...current, special: e.target.value }))} name="special" placeholder="Leave a comment here" id="special" style={{ height: '100px' }}></textarea>
-                                                <label htmlFor="special">What's make's the location special?</label>
-                                            </div>
-                                            {errorMessage.formErrors.specialError &&
-                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.specialError}</div>
-                                            }
-                                            {errorMessage.formErrors.specialCharError &&
-                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.specialCharError}</div>
-                                            }
-                                        </div>
-                                    </div>
                                 </div>
                             }
                             {
                                 secondStep.isChecked &&
                                 <div className="second-step">
                                     <div className="heading-section">
-                                        <h6 className=""><span className="subheading">Staing Conditions:</span></h6>
+                                        <h6 className=""><span className="subheading">Home type:</span></h6>
                                     </div>
                                     <div className="row align-items-center mb-3 ">
                                         <div className="col-md">
                                             <div className="form cf">
                                                 <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                                    <input type="radio" onChange={secondeStepInputChange} className="btn-check" value="entire" name="roomType" id="btnradio1" autoComplete="off" />
+                                                    <input type="radio" onChange={secondeStepInputChange} className="btn-check" value="entire" name="houseType" id="btnradio1" autoComplete="off" />
                                                     <label className="btn btn-outline-secondary" htmlFor="btnradio1"><h1><MdHouseboat /></h1> Entire Place</label>
 
-                                                    <input type="radio" onChange={secondeStepInputChange} className="btn-check" value="private" name="roomType" id="btnradio2" autoComplete="off" />
+                                                    <input type="radio" onChange={secondeStepInputChange} className="btn-check" value="private" name="houseType" id="btnradio2" autoComplete="off" />
                                                     <label className="btn btn-outline-secondary" htmlFor="btnradio2"><h1><MdApartment /></h1> Private Room</label>
 
-                                                    <input type="radio" onChange={secondeStepInputChange} className="btn-check" value="share" name="roomType" id="btnradio3" autoComplete="off" />
+                                                    <input type="radio" onChange={secondeStepInputChange} className="btn-check" value="share" name="houseType" id="btnradio3" autoComplete="off" />
                                                     <label className="btn btn-outline-secondary" htmlFor="btnradio3"><h1><MdHouse /></h1> Shared Room</label>
                                                 </div>
                                             </div>
-                                            {errorMessage.formErrors.roomTypeErr &&
-                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.roomTypeErr}</div>
+                                            {errorMessage.formErrors.houseTypeErr &&
+                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.houseTypeErr}</div>
                                             }
                                         </div>
                                     </div>

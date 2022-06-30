@@ -7,7 +7,7 @@ const roommateRoutes = require('./routes/roomRoutes')
 require('dotenv').config();
 const app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -33,8 +33,14 @@ const server = app.listen(port, () => {
 //     });
 // });
 
-// app.use(function (err, req, res, next) {
-//     console.error(err.message);
-//     if (!err.statusCode) err.statusCode = 500;
-//     res.status(err.statusCode).send(err.message);
-// });
+app.use((err, req, res, next) => {
+    if (res.headersSent) {
+        next()
+    } else {
+        if(err.message){
+            res.status(500).send(err.message)
+        } else {
+            res.send('There was an error')
+        }
+    }
+})
