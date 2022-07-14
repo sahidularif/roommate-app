@@ -75,7 +75,9 @@
     justify-content: end;
     align-items: center;
 }
-
+.dashboard-add .advertise .heading-section  h3{
+    color:#1E306E
+}
 .wrapper .content .dashboard-user form{
     margin-bottom: 100px;
 }

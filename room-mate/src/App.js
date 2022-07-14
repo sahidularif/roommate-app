@@ -98,11 +98,16 @@ function App() {
                 <Route exact path="/tanentAds">
                   <TanentAds />
                 </Route>
-                <PrivateRoute exact path="/dashboard">
+                {/* <PrivateRoute exact path="/dashboard">
                   <DashboardLayout>
                     <AdsListing />
                   </DashboardLayout>
-                </PrivateRoute>
+                </PrivateRoute> */}
+                <Route exact path="/dashboard">
+                  <DashboardLayout>
+                    <AdsListing />
+                  </DashboardLayout>
+                </Route>
                 <Route exact path="/edit/:_id">
                   <EditRoom />
                 </Route>

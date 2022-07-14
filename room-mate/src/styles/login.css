@@ -93,7 +93,7 @@
 }
 .google{
     border: none;
-    background: #f85959;
+    background: #1E306E;
     color: #fff;
 }
 .social-log button{ 
@@ -144,7 +144,7 @@
     padding: 10px 15px;
     border-radius: 50px;
     border:1px groove #f85959;
-    background: #f85959;
+    background: #1E306E !important;
     color: #fff;
 }
 .showError {

@@ -314,7 +314,7 @@ const RoommateFindAd = () => {
     }
     // console.log(loggedInUser);
     return (
-        <div className="room-registration-form p-3">
+        <div className="room-registration-form ">
             <div className="bg-danger">
                 <div className="nav-bar">
                     <Navbar />
