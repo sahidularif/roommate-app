@@ -9,5 +9,5 @@ return await axios.get(`https://bdapis.herokuapp.com/api/v1.1/division/${divisio
 }
 
 export async function getRooms (division) {
-return await axios.get(`http://localhost:5000/api/find_rooms`)
+return await axios.get(`https://renterbd.herokuapp.com/api/find_rooms`)
 }

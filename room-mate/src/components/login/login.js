@@ -4,7 +4,7 @@ import jwt_decode from 'jwt-decode';
 import '../../styles/login.css';
 import { FaGoogle, FaFacebook, FaTwitter } from 'react-icons/fa';
 import { LoginContext, UserActionContext } from '../../App';
-import { useHistory, useLocation } from 'react-router';
+import { Redirect, useHistory, useLocation } from 'react-router';
 import {
     checkSessionUser,
     checkUserType,
@@ -14,8 +14,8 @@ import {
 } from './loginHelper';
 import { formValidation } from '../../utilities/helperFunction';
 import { auth } from './firebaseConfig';
-import axios from 'axios';
-import { stringify } from 'postcss';
+import { useDispatch } from 'react-redux';
+import { google } from '../../redux/slice/auth.slice';
 
 // check is user logged in
 export const isLoggedIn = () => {
@@ -28,13 +28,12 @@ export const isLoggedIn = () => {
     return decodedToken.exp > currentTime;
 };
 
-
-
 const Login = () => {
     const [loggedInUser, setLoggedInUser] = useContext(LoginContext);
     const [userAction, setUserAction] = useContext(UserActionContext); // ** Replacing  [newUser, setNewUser]
     // const [id, setId] = useContext(IdContext); // ** Replacing  [newUser, setNewUser]
     // const [newUser, setNewUser] = useState(false);
+    const dispatch = useDispatch()
     const [user, setUser] = useState({
         isSignedIn: false,
         name: null,
@@ -52,18 +51,17 @@ const Login = () => {
     const location = useLocation();
 
     const { from } = location.state || {
-        from: { pathname: '/user' },
+        from: { pathname: '/' },
     };
     const { login } = { login: { pathname: '/login' } }
     const { userType } = { userType: { pathname: '/userType' } }
     //Handle Google Sign in
     const googleSignin = () => {
-        handleGoogleSignIn().then((res) => {
-            handleResponse(res, true);
-            // axios.post('')
-            // storeAuthToken(res);
+        dispatch(google())
+            .unwrap()
+            .then(() => history.replace(from))
+            .catch(() => history.replace(login))
 
-        });
     };
     //Handle Form Submit
     const handleSubmit = (e) => {
@@ -126,29 +124,18 @@ const Login = () => {
             });
     };
 
-// console.log(userAction)
+    // console.log(userAction)
     return (
         <div className="login-section">
             {/* <div className="log-wrapper"> */}
             <div className="flatation">
-                <div className="about-us heading-section ">
-                    <h2 class="pt-4"><strong>RenterBD</strong></h2>
-                </div>
-                <span class="subheading">your amazing room and roommate</span>
-                <div className="flat-img">
-                </div>
+
             </div>
             <div className="log-container">
-                <div className="login-swithcer text-end">
-                    <p>{!userAction.newUser ? 'Not yet a member? ' : 'Already a member? '}
-                        <button className='login-btn'
-                            onClick={() => setUserAction({newUser: !userAction.newUser})} >
-                            {!userAction.newUser ? ' Sign up' : ' Sign in'}
-                        </button>
-                    </p></div>
-                <div className="log-body">
-                    <div class="heading-section text-start">
-                        <h2 class="mb-4">{!userAction.newUser ? 'Sign in' : 'Sign up'}</h2>
+
+                <div className="log-body mx-auto">
+                    <div class="heading-section text-start mb-5">
+                        <h2 class="auth-heading text-center">Log in to Renterbd</h2>
                     </div>
                     <div className="social-log justify-content-start ">
                         <button type="button" className="google" onClick={googleSignin}>
@@ -156,107 +143,54 @@ const Login = () => {
                         <button type="button" className="facebook"><FaFacebook /></button>
                         <button type="button" className="twitter"><FaTwitter /></button>
                     </div>
-                    {/* <div className="d-flex justify-content-center align-items-center">
-                        <hr style={{ width: '25%' }} /> &nbsp; Or &nbsp;
-                        <hr style={{ width: '25%' }} />
-                    </div> */}
+
 
                     <div className="regular-log">
 
-
-                        {
-                            !userAction.newUser ?
-
-                                /* User Sign In Form */
-
-                                (
-                                    <form onSubmit={handleSubmit}>
-                                        {user != null && (
-                                            <p style={{ maxWidth: '400px' }} className='text-danger'>
-                                                {/* * {user.error} */}
-                                                {error}
-                                            </p>
-                                        )}
-                                        <div className="input-filds">
-                                            <label htmlFor="email">Email</label><br />
-                                            <input autoComplete="off" type="text" name="email" id="email"
-                                                // className={`${errmessage.formErrors.existingEmail ? 'showError' : ''}`}
-                                                onChange={handleInputChange} />
-                                            {errmessage.formErrors.email &&
-                                                <div className="err-msg"><i class="far fa-exclamation-circle"></i> {errmessage.formErrors.email}</div>
-                                            }
-                                        </div>
-                                        <div className="input-filds">
-                                            <label htmlFor="password">Password</label><br />
-                                            <input autoComplete="off" type="password" name="password" id="password"
-                                                className={`${errmessage.formErrors.password ? 'showError' : ''}`}
-                                                onChange={handleInputChange} />
-                                            {errmessage.formErrors.password &&
-                                                <div className="err-msg"><i class="far fa-exclamation-circle"></i> {errmessage.formErrors.password}</div>
-                                            }
-                                        </div>
-                                        <div className="single-fild">
-                                            <button type="submit" className="">Get started</button>
-                                        </div>
-                                    </form>
-                                )
-                                :
-
-                                /* User Sign Up Form */
-
-                                (<form onSubmit={handleSubmit}>
-                                    {user != null && (
-                                        <p style={{ maxWidth: '400px' }} className='text-danger'>
-                                            {/* * {user.error} */}
-                                            {error}
-                                        </p>
-                                    )}
-                                    <div className="input-filds d-flex">
-                                        <div className="single-fild">
-                                            <label htmlFor="name">First name</label><br />
-                                            <input type="text" name="name"
-                                                className={`${errmessage.formErrors.name ? 'showError' : ''}`}
-                                                onChange={handleInputChange} />
-                                            {errmessage.formErrors.name &&
-                                                <div className="err-msg"><i class="far fa-exclamation-circle"></i> {errmessage.formErrors.name}</div>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className="input-filds">
-                                        <label htmlFor="email">Email</label><br />
-                                        <input type="text" name="email" id="email"
-                                            className={`${errmessage.formErrors.email ? 'showError' : ''}`}
-                                            onChange={handleInputChange} />
-                                        {errmessage.formErrors.email &&
-                                            <div className="err-msg"><i class="far fa-exclamation-circle"></i> {errmessage.formErrors.email}</div>
-                                        }
-                                    </div>
-                                    <div className="input-filds">
-                                        <label htmlFor="password">Password</label><br />
-                                        <input type="password" name="password" id="password"
-                                            className={`${errmessage.formErrors.password ? 'showError' : ''}`}
-                                            onChange={handleInputChange} />
-                                        {errmessage.formErrors.password &&
-                                            <div className="err-msg"><i class="far fa-exclamation-circle"></i> {errmessage.formErrors.password}</div>
-                                        }
-                                    </div>
-                                    <div className="input-check">
-                                        <input type="checkbox" name="tos" id="tos" onChange={handleInputChange} />
-                                        <label htmlFor="tos">By creating an account, you are okay with our <a href="/tos">Terms of Condition</a></label>
-
-                                    </div>
-                                    {errmessage.formErrors.tos &&
-                                        <div className="err-msg"><i class="far fa-exclamation-circle"></i> {errmessage.formErrors.tos}</div>
-                                    }
-                                    <div className="single-fild">
-                                        <button type="submit" className="">Get started</button>
-                                    </div>
-                                </form>)
-                        }
-
-
+                        <form onSubmit={handleSubmit} autocomplete="off">
+                            {user != null && (
+                                <p style={{ maxWidth: '400px' }} className='text-danger'>
+                                    {/* * {user.error} */}
+                                    {error}
+                                </p>
+                            )}
+                            <div className="input-filds">
+                                <label htmlFor="email">Email</label><br />
+                                <input
+                                    autocomplete="off"
+                                    type="text"
+                                    name="email"
+                                    id="email"
+                                    placeholder='example@domain.com'
+                                    onChange={handleInputChange} />
+                                {errmessage.formErrors.email &&
+                                    <div className="err-msg"><i class="far fa-exclamation-circle"></i> {errmessage.formErrors.email}</div>
+                                }
+                            </div>
+                            <div className="input-filds">
+                                <label htmlFor="password">Password</label><br />
+                                <input
+                                    autocomplete="off"
+                                    type="password"
+                                    placeholder='password'
+                                    name="password"
+                                    id="password"
+                                    className={`${errmessage.formErrors.password ? 'showError' : ''}`}
+                                    onChange={handleInputChange} />
+                                {errmessage.formErrors.password &&
+                                    <div className="err-msg"><i class="far fa-exclamation-circle"></i> {errmessage.formErrors.password}</div>
+                                }
+                            </div>
+                            <div className="single-fild">
+                                <button type="submit" className="">Get started</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="auth-switch text-center pt-5">
+                        No Account? Sign up <a class="text-link" href="/signup" >here</a>.
                     </div>
                 </div>
+
             </div>
             {/* </div> */}
         </div>

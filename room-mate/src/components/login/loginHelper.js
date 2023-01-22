@@ -39,7 +39,7 @@ export const signInExistingUserWithEmailAndPassword = (user) => {
     })
     .catch(function (error) {
       const newUserInfo = {};
-      newUserInfo.error = error.message;
+      newUserInfo.error = error.message;  
       newUserInfo.success = false;
       console.log(newUserInfo);
       return newUserInfo;
@@ -87,9 +87,9 @@ export const handleSignOut = () => {
   });
 }
 export const checkUserType = async (email) => {
-  // return axios.get(`http://localhost:5000/api/getUser/${email}`)
+  // return axios.get(`https://renterbd.herokuapp.com/api/getUser/${email}`)
   try {
-    let response = await fetch(`http://localhost:5000/api/getUser/${email}`, {
+    let response = await fetch(`https://renterbd.herokuapp.com/api/getUser/${email}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

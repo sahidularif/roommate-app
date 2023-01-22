@@ -10,7 +10,7 @@ const AdsListing = () => {
     const history = useHistory();
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/find_rooms`)
+        axios.get(`https://renterbd.herokuapp.com/api/find_rooms`)
             .then((res) => {
                 setAds(res.data)
             })

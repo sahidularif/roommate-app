@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import DatePicker from "react-datepicker";
+import '../../styles/roomRegister.css';
 import "react-datepicker/dist/react-datepicker.css";
-import '../../../../styles/roomRegister.css';
 import { MdApartment, MdHouseboat, MdHouse } from 'react-icons/md';
+import data from '../../data.json';
 import axios from 'axios';
-import { roomRentFirstStepValidation, roomRentSecondStepValidation } from '../../../../utilities/helperFunction';
-import Navbar from '../../../home/header/navBar';
-import { LoginContext } from '../../../../App';
-import UserProfileSection from '../../../roommateFindAd/DashboarSideNav';
+import { roomRentFirstStepValidation, roomRentSecondStepValidation } from '../../utilities/helperFunction';
+import Navbar from '../home/header/navBar';
+import { LoginContext } from '../../App';
+import UserProfileSection from './userProfileSection';
 
 //::::::::::::ROOMMATEFINDADD::::::::::::::
-const TanentAds = () => {
+const AddForm = () => {
     const fileInputRef = useRef();
     const [errorMessage, setErrorMessage] = useState({
         formErrors: {}
@@ -23,11 +24,14 @@ const TanentAds = () => {
     const [divisions, setDivisions] = useState([])
     const [division, setDivision] = useState("")
     const [districts, setDistricts] = useState([])
+    const [upazilas, setUpazilas] = useState([])
+    const [upazila, setUpazila] = useState("")
     const [loggedInUser, SetLoggedInUser] = useContext(LoginContext)
     const [district, setDistrict] = useState("");
     const [firstStep, setFirstStep] = useState({
         isChecked: true,
         title: null,
+        description: null,
         region: null,
         city: null,
         state: null,
@@ -35,7 +39,6 @@ const TanentAds = () => {
         rent: null,
         deposit: null,
         date: null,
-        description: null,
         formErrors: {},
     });
     const [secondStep, setSecondStep] = useState({
@@ -164,7 +167,7 @@ const TanentAds = () => {
         preventDefault(e);
         const files = e.dataTransfer.files;
         if (files.length) {
-            //   handleFiles(files);
+            handleFiles(files);
         }
     }
     const filesSelected = () => {
@@ -179,7 +182,7 @@ const TanentAds = () => {
         const patternFileExtension = /.*\.(jpeg|jpg|png)/i;
         if (((fileName).match(patternFileExtension))) {
             if (selectedFiles.length <= 10) {
-                let files = [fileInput]
+                let files = [...selectedFiles, fileInput]
                 setSelectedFiles(files)
                 // handleFileUpload(files)
 
@@ -201,6 +204,11 @@ const TanentAds = () => {
         setDivision(item)
         setFirstStep(current => ({ ...current, region: item }))
     }
+    const handleUpazilaChange = (e) => {
+        const item = e.target.value;
+        setUpazila(item)
+        setFirstStep(current => ({ ...current, state: item }))
+    }
     const secondeStepInputChange = (e) => {
         let { name, value } = e.target;
         let previousValue = { ...secondStep };
@@ -213,13 +221,17 @@ const TanentAds = () => {
         setFirstStep(current => ({ ...current, city: item }))
     }
     useEffect(() => {
-        axios.get('https://bdapis.herokuapp.com/api/v1.1/divisions')
-            .then((data) => setDivisions(data.data.data));
+        axios.get('https://exuberant-cow-sheath-dress.cyclic.app/api/v1.0/divisions')
+            .then((data) => setDivisions(data.data));
     }, []);
     useEffect(() => {
-        axios.get(`https://bdapis.herokuapp.com/api/v1.1/division/${division}`)
-            .then((data) => setDistricts(data.data.data));
+        axios.get(`https://exuberant-cow-sheath-dress.cyclic.app/api/v1.0/districts/${division}`)
+            .then((data) => setDistricts(data.data));
     }, [division]);
+    useEffect(() => {
+        axios.get(`https://exuberant-cow-sheath-dress.cyclic.app/api/v1.0/upazilas/${district}`)
+            .then((data) => setUpazilas(data.data));
+    }, [district]);
     useEffect(() => {
         if (selectedFiles.length < 1) return;
         let newImageUrls = [];
@@ -256,14 +268,26 @@ const TanentAds = () => {
     }
 
     const handleFormSubmit = async (e) => {
+        console.log('clicked')
         e.preventDefault();
         let formData = new FormData();
 
         const utilities = filteredItems(secondStep.utilities)
         const amenities = filteredItems(secondStep.amenities)
 
-        
-        formData.append('title', firstStep.region);
+        for (let i = 0; i < selectedFiles.length; i++) {
+            formData.append('files', selectedFiles[i]);
+        }
+
+        amenities.forEach(item => {
+            formData.append(`amenities[]`, JSON.stringify(item));
+        });
+        utilities.forEach(item => {
+            formData.append(`utilities[]`, JSON.stringify(item));
+        });
+
+        formData.append('title', firstStep.title);
+        formData.append('description', firstStep.description);
         formData.append('region', firstStep.region);
         formData.append('city', firstStep.city);
         formData.append('state', firstStep.state);
@@ -271,7 +295,6 @@ const TanentAds = () => {
         formData.append('rent', firstStep.rent);
         formData.append('deposit', firstStep.deposit);
         formData.append('date', firstStep.date);
-        formData.append('description', firstStep.description);
 
         formData.append('houseType', secondStep.houseType);
         formData.append('room', secondStep.room);
@@ -279,21 +302,12 @@ const TanentAds = () => {
         formData.append('bath', secondStep.bath);
         formData.append('minStay', secondStep.minStay);
         formData.append('maxStay', secondStep.maxStay);
-        amenities.forEach(item => {
-            formData.append(`amenities[]`, JSON.stringify(item));
-        });
-        utilities.forEach(item => {
-            formData.append(`utilities[]`, JSON.stringify(item));
-        });
-        for (let i = 0; i < selectedFiles.length; i++) {
-            formData.append('files', selectedFiles[i]);
-        }
         // console.dir(amen.Prototype);
-        console.log(secondStep);
-        await axios.post('https://renterbd.herokuapp.com/api/tanentAds', formData)
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err))
-
+        // console.log(selectedFiles);
+        // await axios.post('http://localhost:4000/api/addRoom', formData)
+        //     .then((res) => console.log(res))
+        //     .catch((err) => console.log(err))
+        console.log(firstStep)
 
     }
 
@@ -312,25 +326,13 @@ const TanentAds = () => {
     }
     // console.log(loggedInUser);
     return (
-        <div className="room-registration-form">
-            <div className="bg-danger">
-                <div className="nav-bar">
-                    <Navbar />
-                </div>
-            </div>
-            <div className="room-register-section">
-                <div className="flatation-side p-4 align-items-center justify-content-center">
-
-                    {/* <div className="flatation-img">
-                    </div> */}
-                    <UserProfileSection />
-                </div>
-                <div className="room-form p-5">
+      
                     <div className="room-registration-form p-3">
                         <form className="form cf" onSubmit={handleFormSubmit}>
                             {
                                 firstStep.isChecked &&
                                 <div className="first-step">
+
                                     <div className="row mb-3">
 
                                         <div className="col-md">
@@ -350,7 +352,7 @@ const TanentAds = () => {
                                         <div className="col-md">
                                             <div className="mb-3">
                                                 <label for="description" className="form-label">Post description</label>
-                                                <textarea className="form-control" value={firstStep.description} onChange={(e) => setFirstStep(current => ({ ...current, description: e.target.value }))} name="description" placeholder="Wrote post descripton in 500 words." id="special" style={{ height: '100px' }}></textarea>
+                                                <textarea className="form-control" value={firstStep.description} onChange={(e) => setFirstStep(current => ({ ...current, description: e.target.value }))} name="description" placeholder="Descripton must be in 500 words." id="special" style={{ height: '100px' }}></textarea>
                                             </div>
                                             {errorMessage.formErrors.descriptError &&
                                                 <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.descriptError}</div>
@@ -360,9 +362,8 @@ const TanentAds = () => {
                                             }
                                         </div>
                                     </div>
-
                                     <div className="heading-section">
-                                        <h6 className=""><span className="subheading">Where do you want to move?</span></h6>
+                                        <h5 className=""><span className="subheading">Location</span></h5>
                                     </div>
 
                                     <div className="row g-2 mb-3">
@@ -374,7 +375,7 @@ const TanentAds = () => {
                                                     {
                                                         divisions.map((division, _id) => {
                                                             return (
-                                                                <option key={_id} value={division._id}>{division.division}</option>
+                                                                <option key={_id} value={division.id}>{division.name}</option>
                                                             )
                                                         })
                                                     }
@@ -394,7 +395,7 @@ const TanentAds = () => {
                                                     {
                                                         districts?.map((district, key) => {
                                                             return (
-                                                                <option key={key} value={district._id}>{district.district}</option>
+                                                                <option key={key} value={district.id}>{district.name}</option>
                                                             )
                                                         })
                                                     }
@@ -410,11 +411,22 @@ const TanentAds = () => {
                                     <div className="row g-2 mb-3">
                                         <div className="col-md">
                                             <div className="form-floating">
-                                                <input type="text" name="state" onBlur={handleBlur} className="form-control" id="state" />
-                                                <label htmlFor="state">State/Upazilla</label>
+                                                <select className="form-select" id="upazila"
+                                                    aria-label="Floating label select example"
+                                                    onChange={handleUpazilaChange}
+                                                >
+                                                    {
+                                                        upazilas?.map((upazila, key) => {
+                                                            return (
+                                                                <option key={key} value={upazila.id}>{upazila.name}</option>
+                                                            )
+                                                        })
+                                                    }
+                                                </select>
+                                                <label htmlFor="city">Upazila</label>
                                             </div>
-                                            {errorMessage.formErrors.stateError &&
-                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.stateError}</div>
+                                            {errorMessage.formErrors.cityError &&
+                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.cityError}</div>
                                             }
                                         </div>
                                         <div className="col-md">
@@ -428,57 +440,60 @@ const TanentAds = () => {
                                         </div>
                                     </div>
                                     <div className="row mb-3 mt-5">
-                                        <div className="col-md">
-                                            <label for="rent" className="form-label">Max rent(Monthly)</label>
-                                            <input type="number" name="rent" value={firstStep.rent} onBlur={handleBlur} className="form-control" id="rent" />
-                                            {errorMessage.formErrors.rentError &&
-                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.rentError}</div>
-                                            }
+                                        <div className="heading-section">
+                                            <h5 className=""><span className="subheading">Rent & Move In:</span></h5>
                                         </div>
                                         <div className="col-md">
-                                            <label for="rent" className="form-label">Deposit</label>
-                                            <input type="number" name="deposit" value={firstStep.rent} onBlur={handleBlur} className="form-control" id="rent" />
-                                            {errorMessage.formErrors.rentError &&
-                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.rentError}</div>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className="row mb-3 mt-3">
+                                            <div className="form-floating">
+                                                <input type="number" name="rent" onBlur={handleBlur} className="form-control" id="rent" />
+                                                <label htmlFor="rent">Monthly Rent</label>
+                                            </div>
 
-                                        <div className="col-md-4">
-                                            <label for="date" className="form-label">Move-in date</label>
-                                            <DatePicker className="form-control" name="date" placeholderText="Date" selected={firstStep.date ? firstStep.date : startDate} onChange={(date) => {
-                                                setStartDate(date);
-                                                setFirstStep(current => ({ ...current, date: date }))
-                                            }} />
+                                            {errorMessage.formErrors.rentError &&
+                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.rentError}</div>
+                                            }
+                                        </div>
+                                        <div className="col-md">
+                                            <div className="form-floating">
+                                                <input type="number" name="deposit" onBlur={handleBlur} className="form-control" id="deposit" />
+                                                <label htmlFor="deposit">Deposit fee</label>
+                                            </div>
+                                            {errorMessage.formErrors.depositError &&
+                                                <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.depositError}</div>
+                                            }
+                                        </div>
+                                        <div className="col-md">
+                                            <div className="form-floating">
+                                                <DatePicker className="form-control" name="date" placeholderText="Date" selected={firstStep.date ? firstStep.date : startDate} onChange={(date) => {
+                                                    setStartDate(date);
+                                                    setFirstStep(current => ({ ...current, date: date }))
+                                                }} />
+                                            </div>
                                             {errorMessage.formErrors.dateError &&
                                                 <div className="err-msg"><i className="far fa-exclamation-circle"></i> {errorMessage.formErrors.dateError}</div>
                                             }
                                         </div>
-
                                     </div>
-
-
                                 </div>
                             }
                             {
                                 secondStep.isChecked &&
                                 <div className="second-step">
                                     <div className="heading-section">
-                                        <h6 className=""><span className="subheading">Preferred home type:</span></h6>
+                                        <h6 className=""><span className="subheading">Home type:</span></h6>
                                     </div>
                                     <div className="row align-items-center mb-3 ">
                                         <div className="col-md">
                                             <div className="form cf">
                                                 <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
                                                     <input type="radio" onChange={secondeStepInputChange} className="btn-check" value="entire" name="houseType" id="btnradio1" autoComplete="off" />
-                                                    <label className="btn btn-outline-secondary" htmlFor="btnradio1"><h1><MdHouseboat /></h1> Entire Place</label>
+                                                    <label className="btn btn-outline-secondary" htmlFor="btnradio1"><h1></h1> Entire Place</label>
 
                                                     <input type="radio" onChange={secondeStepInputChange} className="btn-check" value="private" name="houseType" id="btnradio2" autoComplete="off" />
-                                                    <label className="btn btn-outline-secondary" htmlFor="btnradio2"><h1><MdApartment /></h1> Private Room</label>
+                                                    <label className="btn btn-outline-secondary" htmlFor="btnradio2"><h1></h1> Private Room</label>
 
                                                     <input type="radio" onChange={secondeStepInputChange} className="btn-check" value="share" name="houseType" id="btnradio3" autoComplete="off" />
-                                                    <label className="btn btn-outline-secondary" htmlFor="btnradio3"><h1><MdHouse /></h1> Shared Room</label>
+                                                    <label className="btn btn-outline-secondary" htmlFor="btnradio3"><h1></h1> Shared Room</label>
                                                 </div>
                                             </div>
                                             {errorMessage.formErrors.houseTypeErr &&
@@ -543,7 +558,7 @@ const TanentAds = () => {
 
                                     <div className="row mb-3">
                                         <div className="heading-section">
-                                            <h6 className=""><span className="subheading">Staying Conditions:</span></h6>
+                                            <h6 className=""><span className="subheading">Staing Conditions:</span></h6>
                                         </div>
                                         <div className="col-md">
                                             <div className="form-floating">
@@ -597,7 +612,7 @@ const TanentAds = () => {
                                             ))
                                         }
                                     </section>
-                                    <h6 className="subheading mt-2">What’s the amenities do you like?</h6>
+                                    <h6 className="subheading mt-2">What’s the room like?</h6>
                                     <section className="app d-flex">
                                         {
                                             secondStep.amenities?.map((amenity, i) =>
@@ -625,7 +640,7 @@ const TanentAds = () => {
                                 <section>
                                     <div className="row">
                                         <div className="heading-section">
-                                            <h6 className=""><span className="subheading">Profile picture:</span></h6>
+                                            <h6 className=""><span className="subheading">Upload Photos:</span></h6>
                                         </div>
                                         <div className="col-md">
                                             <div className={`${highlighted ? "highlighted-dropzone" : "dropzone"}`}
@@ -677,20 +692,20 @@ const TanentAds = () => {
                             <div className="footer-form">
                                 {
                                     !firstStep.isChecked && <div className="">
-                                        <button type="button" onClick={handleBackButtonClick} className="btn btn-secondary"><i className="fal fa-long-arrow-left"></i> Back</button>
+                                        <button type="button" onClick={handleBackButtonClick} className="btn btn-outline-info"><i className="fal fa-long-arrow-left"></i> Back</button>
                                     </div>
                                 }{
                                     firstStep.isChecked &&
                                     (
                                         <div className="">
-                                            <button type="button" onClick={handleFirstStepSubmit} className="btn btn-secondary">Next <i className="fal fa-long-arrow-right"></i></button>
+                                            <button type="button" onClick={handleFirstStepSubmit} className="btn btn-outline-info">Next <i className="fal fa-long-arrow-right"></i></button>
                                         </div>
                                     )
                                 }{
                                     secondStep.isChecked &&
                                     (
                                         <div className="">
-                                            <button type="button" onClick={handleSecondStepSubmit} className="btn btn-secondary">next <i className="fal fa-long-arrow-right"></i></button>
+                                            <button type="button" onClick={handleSecondStepSubmit} className="btn btn-outline-info">next <i className="fal fa-long-arrow-right"></i></button>
                                         </div>
                                     )
                                 }{
@@ -704,11 +719,7 @@ const TanentAds = () => {
                         </form>
                     </div>
 
-                </div>
-
-            </div >
-        </div >
     );
 };
 
-export default TanentAds;
+export default AddForm;

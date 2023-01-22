@@ -10,7 +10,7 @@ import axios from 'axios'
 import { Link, useHistory } from "react-router-dom";
 let PageSize = 9;
 export default function Roommates() {
-    const url = `http://localhost:5000/api/searchRoom`
+    const url = `https://renterbd.herokuapp.com/api/searchRoom`
     const [currentPage, setCurrentPage] = useState(1);
     const [data, setData] = useState([])
     const [rooms, setRooms] = useState([])
@@ -22,7 +22,7 @@ export default function Roommates() {
     })
     const history = useHistory();
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/roommates`)
+        axios.get(`https://renterbd.herokuapp.com/api/roommates`)
             .then(res => {
                 setData(res.data);
             })
@@ -48,7 +48,7 @@ export default function Roommates() {
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
-        axios.get('http://localhost:5000/api/searchRoom', {
+        axios.get('https://renterbd.herokuapp.com/api/searchRoom', {
             params: {
                 keyword: searchInput.keyword,
                 dateFrom: searchInput.dateFrom,

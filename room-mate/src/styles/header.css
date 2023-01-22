@@ -1,212 +1,254 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
-:root{
+:root {
     --ff-poppins: 'Poppins', sans-serif;
     --ff-roboto: 'Roboto', sans-serif;
     --header-height: 3.5rem;
     --font-alt: 'Open Sans', sans-serif;
-  /*========== Colors ==========*/
-  /*Color mode HSL(hue, saturation, lightness)*/
-  --first-color: hsl(38, 69%, 59%);
-  --text-color: hsl(38, 8%, 8%);
-  --color-golden: #DCCA87;
-  --color-black: #0C0C0C;
-  --color-gray: #545454;
-  --color-crimson: #F5EFDB;
-  --color-grey: #AAAAAA;
-  --color-white: #FFFFFF;
-  --color-font: #215374;
-  --color-div: #1E306E;
+    /*========== Colors ==========*/
+    /*Color mode HSL(hue, saturation, lightness)*/
+    --first-color: hsl(38, 69%, 59%);
+    --text-color: hsl(38, 8%, 8%);
+    --color-golden: #DCCA87;
+    --color-black: #0C0C0C;
+    --color-gray: #545454;
+    --color-crimson: #F5EFDB;
+    --color-grey: #AAAAAA;
+    --color-white: #FFFFFF;
+    --color-font: #215374;
+    --color-div: #1E306E;
 
-  /*========== Font and typography ==========*/
-  /*.5rem = 8px | 1rem = 16px ...*/
-  --body-font: 'Space Grotesk', sans-serif;
-  --biggest-font-size: 2.375rem;
-  --normal-font-size: .938rem;
-  --smaller-font-size: .75rem;
+    /*========== Font and typography ==========*/
+    /*.5rem = 8px | 1rem = 16px ...*/
+    --body-font: 'Space Grotesk', sans-serif;
+    --biggest-font-size: 2.375rem;
+    --normal-font-size: .938rem;
+    --smaller-font-size: .75rem;
 }
 
 
 /* Responsive typography */
 @media screen and (min-width: 1024px) {
     :root {
-      --biggest-font-size: 5rem;
-      --normal-font-size: 1rem;
-      --smaller-font-size: .813rem;
+        --biggest-font-size: 5rem;
+        --normal-font-size: 1rem;
+        --smaller-font-size: .813rem;
     }
-  }
-  
-  /*=============== BASE ===============*/
-  *{
+}
+
+/*=============== BASE ===============*/
+* {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-  }
-  
-  body{
+}
+
+body {
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
     font-weight: 500;
     color: var(--text-color);
-  }
+}
+
 /* .header {
     overflow: hidden;    
   } */
-.top-nav{
+.top-nav {
     display: flex;
     justify-content: end;
     padding-right: 10px;
-    background-color:var(--color-font);
+    background-color: var(--color-font);
 }
-.top-nav ul{
+
+.top-nav ul {
     display: flex;
     list-style-type: none;
     margin: 0%;
     color: #fff;
     padding: 5px 20px;
 }
-.top-nav ul li a{
+
+.top-nav ul li a {
     text-decoration: none;
     color: #fff;
     float: right;
 }
-.top-nav ul li{
+
+.top-nav ul li {
     list-style-type: none;
     padding-right: 20px;
     float: right;
-} 
+}
 
-.navbar{
+.navbar {
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: 2fr;
     padding: 20px 20px;
 }
 
-.navbar img{
+.navbar img {
     width: 150px;
 }
-.brand{
+
+.brand {
     justify-self: center;
     align-self: center;
     color: aliceblue;
-    font-size:x-large;
+    font-size: x-large;
 }
-.nav-btn{
+
+.nav-btn {
     justify-self: center;
     align-self: center;
     justify-content: space-between;
 }
-.nav-btn button{
+
+.nav-btn button {
     background-color: transparent;
     color: #f85959;
-    border:1px solid #f85959;
+    border: 1px solid #f85959;
     border-radius: 3px;
     padding: 10px 10px;
     margin-left: 5px;
-    font-size:medium;
+    font-size: medium;
     font-weight: 500;
 }
-.nav-btn button:enabled:hover{
+
+.nav-btn button:enabled:hover {
     background-color: transparent;
     border: 1px solid #f85959;
     color: #f85959;
 }
-.nav-btn button:enabled{
+
+.nav-btn button:enabled {
     background-color: #f85959;
     color: white;
 }
-.nav-btn button:disabled:hover{
+
+.nav-btn button:disabled:hover {
     background-color: #f85959;
     color: white;
 }
 
 
-.navs{
+.navs {
     justify-content: center;
     align-items: center;
     text-align: center;
     font-family: var(--ff-poppins);
 }
-.navs ul{
+
+.navs ul {
     margin: 0 auto;
-    display: flex; 
+    display: flex;
     list-style-type: none;
 }
-.navs ul li a{
+
+.navs ul li a {
     list-style-type: none;
     padding: 10px 25px;
     letter-spacing: 1px;
-    color:white;
+    color: white;
     text-decoration: none;
 }
+
 .navs ul li {
     font-size: medium;
 }
-.navs ul li a:hover{
+
+.navs ul li a:hover {
     color: #f85959;
 }
-.add-listing-btn{
+
+.add-listing-btn {
     border-radius: 50px;
     border: 1px solid white;
 }
-.add-listing-btn:hover{
+
+.add-listing-btn:hover {
     border-radius: 50px;
     background-color: #f85959;
     color: white !important;
     border-color: transparent;
 }
+
+.user-profile {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    overflow: visible;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.user-profile img {
+    max-width: 100%;
+    height: auto;
+}
+
+.app-user-profile {
+    height: 3rem;
+    width: auto;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 640px) {
-    .nav-btn .sign-in{
+    .nav-btn .sign-in {
         font-size: 14px;
         color: white;
         width: auto;
         padding: 5px 5px;
     }
-    .navbar img{
+
+    .navbar img {
         width: 100px;
     }
-    .hero-title h1{
+
+    .hero-title h1 {
         padding: 15px 0px 10px 10px;
         font-size: 40px;
     }
-  }
+}
+
 @media screen and (max-width: 640px) {
-    .navs ul li a{
+    .navs ul li a {
         color: white;
         font-size: 14px;
         width: auto;
         font-weight: 500;
     }
-  }
+}
 
 /* New navbar style */
-*{
+* {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-  }
-  
-  body{
+}
+
+body {
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
     font-weight: 500;
     color: var(--text-color);
-  }
-  
-  ul {
+}
+
+ul {
     list-style: none;
-  }
-  
-  a {
+}
+
+a {
     text-decoration: none;
-  }
-  
-  img {
+}
+
+img {
     max-width: 100%;
     height: auto;
-  }
-  .p__opensans {
+}
+
+.p__opensans {
     font-family: var(--font-alt);
     color: var(--color-white);
     font-weight: 400;
@@ -214,10 +256,10 @@
     text-transform: capitalize;
     line-height: 28px;
     font-size: var(--normal-font-size);
-  }
-  
-  /*=============== REUSABLE CSS CLASSES ===============*/
-  .app__navbar {
+}
+
+/*=============== REUSABLE CSS CLASSES ===============*/
+.app__navbar {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -259,23 +301,74 @@
 }
 
 .app__navbar-login {
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
 
-.app__navbar-login a {
-    margin: 0 1rem;
-    text-decoration: none;
-    transition: .5s ease;
+.app-user-profile {
+    height: 2rem;
+    width: auto;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
+.app__navbar ul li ul {
+    flex-direction: column;
+    position: absolute;
+    background-color: white;
+    align-items: flex-start;
+    transition: all 0.5s ease;
+    width: auto;
+    right: 0;
+    top: 4rem;
+    border-radius: 0.325rem;
+    gap: 0;
+    padding: 1rem 0rem;
+    opacity: 0;
+    box-shadow: 0px 0px 100px rgba(20, 18, 18, 0.25);
+    display: none;
+}
 
+.sub-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.725rem;
+    cursor: pointer;
+    padding: 0.2rem 1.5rem;
+}
 
-.app__navbar-login div {
-    width: 1px;
-    height: 30px;
-    background: var(--color-grey);
+.sub-item:hover {
+    background-color: rgba(232, 232, 232, 0.4);
+}
+
+.sub-item:hover .material-icons-outlined {
+    color: #ff9800;
+    transform: scale(1.08) translateY(-2px);
+    cursor: pointer;
+}
+
+.sub-item:hover p {
+    color: #000;
+    cursor: pointer;
+}
+
+.sub-item p {
+    font-size: 0.85rem;
+    color: #888888;
+    font-weight: 500;
+    margin: 0.4rem 0;
+    flex: 1;
+}
+
+.app__navbar ul li:hover>ul,
+.app__navbar ul li ul:hover {
+    visibility: visible;
+    opacity: 1;
+    display: flex;
 }
 
 .app__navbar-smallscreen {
@@ -336,7 +429,8 @@
     .app__navbar-smallscreen {
         display: flex;
     }
-    .app__navbar-login{
+
+    .app__navbar-login {
         display: none;
     }
 }

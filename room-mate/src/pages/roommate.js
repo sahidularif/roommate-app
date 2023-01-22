@@ -24,7 +24,7 @@ export default function Roommate() {
         dateTo: null
     }])
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/find_room/${_id}`)
+        axios.get(`https://renterbd.herokuapp.com/api/find_room/${_id}`)
             .then(res => {
                 setRoom(res.data);
                 setImages(res.data.img_collection);

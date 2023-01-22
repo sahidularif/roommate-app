@@ -7,7 +7,7 @@ import axios from 'axios';
 import { roomRentFirstStepValidation, roomRentSecondStepValidation } from '../../utilities/helperFunction';
 import Navbar from '../home/header/navBar';
 import { LoginContext } from '../../App';
-import UserProfileSection from '../roommateFindAd/userProfileSection';
+import UserProfileSection from '../roommateFindAd/DashboarSideNav';
 import { useParams } from 'react-router-dom';
 
 //::::::::::::ROOMMATEFINDADD::::::::::::::
@@ -153,7 +153,7 @@ const EditRoom = () => {
         return new File([theBlob], fileName, { lastModified: new Date().getTime(), type: theBlob.type })
     }
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/find_room/${_id}`)
+        axios.get(`https://renterbd.herokuapp.com/api/find_room/${_id}`)
             .then((res) => {
                 const data = res.data;
                 setData(data)
@@ -396,7 +396,7 @@ const EditRoom = () => {
         formData.append('bath', secondStep.bath);
         formData.append('minStay', secondStep.minStay);
         formData.append('maxStay', secondStep.maxStay);
-        await fetch(`http://localhost:5000/api/updateRoom/${_id}`, {
+        await fetch(`https://renterbd.herokuapp.com/api/updateRoom/${_id}`, {
             method: 'PUT',
             body: formData,
 

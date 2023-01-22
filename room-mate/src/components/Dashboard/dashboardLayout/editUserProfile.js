@@ -80,7 +80,7 @@ const EditUserProfile = () => {
         // formData.append('guests', user.guests)
         // formData.append('pets', user.pets)
 
-        await axios.put(`http://localhost:5000/api/updateUser/${loggedInUser.user_id}`, initial)
+        await axios.put(`https://renterbd.herokuapp.com/api/updateUser/${loggedInUser.user_id}`, initial)
             .then((res) => console.log(res))
             .catch((err) => console.log(err))
 

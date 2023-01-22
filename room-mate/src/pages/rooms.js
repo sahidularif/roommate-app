@@ -10,7 +10,7 @@ import axios from 'axios'
 import { Link, useHistory } from "react-router-dom";
 let PageSize = 9;
 export default function Rooms() {
-    const url = `http://localhost:5000/api/searchRoom`
+    const url = `http://localhost:4000/api/searchRoom`
     const [currentPage, setCurrentPage] = useState(1);
     const [data, setData] = useState([])
     const [rooms, setRooms] = useState([])
@@ -22,7 +22,7 @@ export default function Rooms() {
     })
     const history = useHistory();
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/find_rooms`)
+        axios.get(`http://localhost:4000/api/find_rooms`)
             .then(res => {
                 setData(res.data);
             })
@@ -48,7 +48,7 @@ export default function Rooms() {
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
-        axios.get('http://localhost:5000/api/searchRoom', {
+        axios.get('http://localhost:4000/api/searchRoom', {
             params: {
                 keyword: searchInput.keyword,
                 dateFrom: searchInput.dateFrom,

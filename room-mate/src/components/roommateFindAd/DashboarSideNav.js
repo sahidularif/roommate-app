@@ -3,18 +3,18 @@ import { Link } from 'react-router-dom';
 import { LoginContext, SwitchUserContext } from '../../App';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 
-const UserProfileSection = ({ toggle }) => {
+const DashboarSideNav = ({ toggle }) => {
     const [loggedInUser, setLoggedInUser] = useContext(LoginContext);
     const [user, setUser] = useContext(SwitchUserContext)
 
     console.log(loggedInUser);
     return (
         <div className='user-profile-section'>
-            <div className='user-image text-center mb-5'>
+            {/* <div className='user-image text-center mb-5'>
                 <img src={loggedInUser.picture} class="img-thumbnail d-block mx-auto rounded-pill" alt="user" />
                 <h6 className='mx-auto'>{loggedInUser.name}</h6>
 
-            </div>
+            </div> */}
             <div className='nav-menu'>
                 {
                     !user.tanent ?
@@ -69,4 +69,4 @@ const UserProfileSection = ({ toggle }) => {
     );
 };
 
-export default UserProfileSection;
+export default DashboarSideNav;

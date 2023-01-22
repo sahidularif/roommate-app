@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import '../../../styles/header.css';
 // import logo from '../../../images/logo/  ';
-import images from '../../../assets/gericht.png';
+import images from '../../../images/users/person_1.jpg';
 import { Link } from 'react-router-dom';
 import { LoginContext, SwitchUserContext, UserActionContext } from '../../../App';
 import { Button } from 'bootstrap';
@@ -9,10 +9,11 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { HiViewGridAdd } from 'react-icons/hi';
 
 import { MdClose } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 const Navbar = () => {
+    const { user, jwt } = useSelector((state) => state.auth)
     const [loggedInUser, setLoggedInUser] = useContext(LoginContext);
     const [userAction, setUserAction] = useContext(UserActionContext);
-    const [user, setUser] = useContext(SwitchUserContext);
     const [toggleMenu, setToggleMenu] = React.useState(false);
     return (
 
@@ -27,9 +28,45 @@ const Navbar = () => {
                 <li><a href="#apartment" className="p__opensans">Apartment</a></li>
                 <li><a href="#contact" className="p__opensans">Contact</a></li>
             </div>
-            <div className="app__navbar-login">
-                <a href="/login" className="p__opensans">Log In / Registration</a>
+            <div className="">
+
             </div>
+
+            <ul className='app__navbar-login g-0'>
+                {
+                    !user ? (
+                        <li><a href="/login" className="p__opensans">Log In / Registration</a></li>
+                    )
+                        :
+                        (
+                            <li>
+                                <img src={images} alt="user" className='app-user-profile' />
+                                <ul>
+                                    <li class="sub-item">
+                                        <span class="material-icons-outlined"> grid_view </span>
+                                        <p>Dashboard</p>
+                                    </li>
+                                    <li class="sub-item">
+                                        <span class="material-icons-outlined">
+                                            format_list_bulleted
+                                        </span>
+                                        <p>My Orders</p>
+                                    </li>
+                                    <li class="sub-item">
+                                        <span class="material-icons-outlined"> manage_accounts </span>
+                                        <p>Update Profile</p>
+                                    </li>
+                                    <li class="sub-item">
+                                        <span class="material-icons-outlined"> logout </span>
+                                        <p>Logout</p>
+                                    </li>
+                                </ul>
+                            </li>
+                        )
+                }
+
+
+            </ul>
             <div className="app__navbar-smallscreen">
                 <HiViewGridAdd color="#fff" fontSize={27} onClick={() => setToggleMenu(true)} />
                 {toggleMenu && (

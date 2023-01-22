@@ -3,7 +3,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: #F8FAFF;
+    background-color: #0e51f8;
+    height: 100vh;
 }
 @media screen and (max-width: 650px) {
     .login-section{
@@ -14,10 +15,7 @@
     
     }
     .flatation{
-        padding-top: 1rem;
-        margin: 0 auto;
-        background-color: #a94442;
-        height: 100%;
+        display: none;
     }
     .flatation .heading-section{
         padding-top: 1rem;
@@ -27,7 +25,7 @@
         margin:0 auto;
     }
     .log-container .log-body{
-        padding-top: 1rem;
+        padding: 30px;
     }
     .log-container .log-body .social-log{
        display: flex;
@@ -37,59 +35,92 @@
     }
     .log-container .log-body .social-log button{
         width: 100%;
-        padding: 10px;
+        padding: 5px;
+    }
+    .log-container .log-body, .log-container{      
+        padding-top: 1rem;
+    }
+    .input-filds input{
+        border: 1px solid powderblue;
+        /* background-color: rgb(252, 241, 241); */
+        border-radius: 3px;
+        height: 35px;
+        min-width: 100%;
+        padding-left: 10px;
     }
   }
-.log-wrapper{
-    margin: auto;
-    /* padding-top: 200px; */
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    /* border: 1px solid black; */
-}
+  @media screen and (max-width: 960px){
+    .social-log{
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+    .google{
+        width: 100%;
+    }
+    .facebook, .twitter{
+        width: 100%;
+    }
+  }
 .flatation{
-    background-color: #fff;
+    /* background-color: #fff; */
     width: 100%;    
-    background-repeat: no-repeat;
+    background-image: url('../images/bg2.jpg');
     background-size: cover;
-    background-position: center;
     height: 100vh;
+    min-height: 100%;
     margin: auto;
-    padding: 50px;
-    padding-top: 5rem;
 }
 .flat-img{
-    background-image: url('../images/log-bg.png');
-    background-repeat: no-repeat;
+    background-image: url('../images/bg2.jpg');
     background-size: cover;
-    background-position: center;
-    height: 400px;
+    height: 100vh;
+    min-height: 100%
 }
 .log-container{
-    border: 1px solid white;
+    position: relative;
     width: 100%;
-    background-color: #ffffff;
-    padding: 50px;
-    padding-top: 5rem;
+    background-color: #fff;
+    height: 100%;
+    margin: 0px auto;
+    justify-content:center;
 }
 .log-container .log-body{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 50px;
     width: 100%;
-    padding-top: 5rem;
-    margin: auto;
 }
-.login-swithcer strong{
+.auth-switch span{
     cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    color:#9fa7b5;
+    font-size: 16px;
+    font-weight: 400;
+}
+.auth-switch a {
+    border: none;
+    background-color: transparent;
+    font-weight: bold;
+    color: #1E306E;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+.auth-heading{
+    font-size: 1.25rem;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
 }
 .social-log .google div{
     display: flex;
     align-items: center;
     padding: 5px 0;
-    justify-content: space-between;
+    justify-content: center;
 }
 .google div span{
-    padding: 0 40px;
+    padding: 0 20px;
 }
 .google{
     border: none;
@@ -113,8 +144,12 @@
     /* background-color: rgb(252, 241, 241); */
     border-radius: 3px;
     height: 35px;
-    width: 93%;
+    width: 100%;
+    padding-left: 10px;
 }
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  }
 .input-filds .single-fild{
     margin-right: 10px;
 }
@@ -124,7 +159,7 @@
     /* background-color: rgb(252, 241, 241); */
     border-radius: 3px;
     height: 35px;
-    width: 240px;
+    width: 100%;
 }
 .input-filds label{
     font-weight: 500;
@@ -143,17 +178,16 @@
     border: none;
     padding: 10px 15px;
     border-radius: 50px;
-    border:1px groove #f85959;
     background: #1E306E !important;
     color: #fff;
 }
 .showError {
     border-color: #a94442 !important;
-    color: #a94442 !important;
+    color: #1E306E !important;
     margin-bottom: 2px;
   }
 .err-msg{
-    color: red;
+    color:#1E306E;
     font-size: 12px;
     padding-bottom: 10px;
 }
@@ -171,6 +205,14 @@
 .user-type .house-seeker:hover , .house-holder:hover{
     box-shadow: 0px 2px 5px 0px rgba(214, 9, 9, 0.5);
     background-color: #fff;
+}
+.user-tos{
+    color:rgb(37, 37, 39);
+    font-size: 12px;
+}
+.user-tos a{
+    color:gray;
+    text-decoration: underline;
 }
 .userType-flatation{
     position: absolute;
@@ -202,9 +244,4 @@
     background-position: center;
     height: 100vh;
     background-color: #F8FAFF;
-  }
-  .login-btn {
-      border: none;
-      background-color: transparent;
-      font-weight: bold;
   }

@@ -25,6 +25,9 @@ import EditUserProfile from "./components/Dashboard/dashboardLayout/editUserProf
 import axios from "axios";
 
 import './App.css'
+import RoomAdd from "./components/roommateFindAd/roomAdd";
+import AddForm from "./components/roommateFindAd/addForm";
+import Signup from "./components/login/Signup";
 export const LoginContext = createContext();
 export const UserActionContext = createContext();
 export const SwitchUserContext = createContext();
@@ -89,25 +92,39 @@ function App() {
                 <Route exact path="/login">
                   <Login />
                 </Route>
-                <Route exact path="/roommateFind">
+                <Route exact path="/signup">
+                  <Signup />
+                </Route>
+                {/* <Route exact path="/roommateFind">
                   <RoommateFindAd />
-                </Route>
-                <Route exact path="/roomFind">
+                </Route> */}
+            
+                {/* <PrivateRoute exact path="/roomFind">
                   <RoomFindAd />
-                </Route>
-                <Route exact path="/tanentAds">
-                  <TanentAds />
-                </Route>
-                {/* <PrivateRoute exact path="/dashboard">
-                  <DashboardLayout>
-                    <AdsListing />
-                  </DashboardLayout>
                 </PrivateRoute> */}
-                <Route exact path="/dashboard">
+                <PrivateRoute exact path="/tanentAds">
+                  <TanentAds />
+                </PrivateRoute>
+                <PrivateRoute exact path="/dashboard">
                   <DashboardLayout>
                     <AdsListing />
                   </DashboardLayout>
+                </PrivateRoute>
+                <PrivateRoute exact path="/add">
+                  <DashboardLayout>
+                    <AddForm />
+                  </DashboardLayout>
+                </PrivateRoute>
+                <Route exact path="/roomAdd">
+                  <DashboardLayout>
+                    <RoommateFindAd />
+                  </DashboardLayout>
                 </Route>
+                {/* <Route exact path="/dashboard">
+                  <DashboardLayout>
+                    <AdsListing />
+                  </DashboardLayout>
+                </Route> */}
                 <Route exact path="/edit/:_id">
                   <EditRoom />
                 </Route>

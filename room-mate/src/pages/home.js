@@ -14,7 +14,7 @@ import axios from 'axios';
 const Home = () => {
     const [data, setData] = useState([])
     useEffect(() => {
-        axios.get('http://localhost:5000/api/find_rooms')
+        axios.get('https://renterbd.herokuapp.com/api/find_rooms')
             // .then((res)=> JSON.parse(res))
             .then((res) => {
                 setData(res.data)
