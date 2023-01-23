@@ -306,7 +306,7 @@ const RoommateFindAd = () => {
         formData.append('maxStay', secondStep.maxStay);
         // console.dir(amen.Prototype);
         // console.log(selectedFiles);
-        // await axios.post('http://localhost:4000/api/addRoom', formData)
+        // await axios.post('https://renterbd-backend.cyclic.app/api/addRoom', formData)
         //     .then((res) => console.log(res))
         //     .catch((err) => console.log(err))
         // console.log(firstStep)

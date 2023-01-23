@@ -12,8 +12,6 @@ import { MdClose } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 const Navbar = () => {
     const { user, jwt } = useSelector((state) => state.auth)
-    const [loggedInUser, setLoggedInUser] = useContext(LoginContext);
-    const [userAction, setUserAction] = useContext(UserActionContext);
     const [toggleMenu, setToggleMenu] = React.useState(false);
     return (
 

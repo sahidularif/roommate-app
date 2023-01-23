@@ -213,11 +213,11 @@ const TanentAds = () => {
         setFirstStep(current => ({ ...current, city: item }))
     }
     useEffect(() => {
-        axios.get('https://bdapis.herokuapp.com/api/v1.1/divisions')
+        axios.get('https://bd-geolocation-api.cyclic.app/api/v1.0/divisions')
             .then((data) => setDivisions(data.data.data));
     }, []);
     useEffect(() => {
-        axios.get(`https://bdapis.herokuapp.com/api/v1.1/division/${division}`)
+        axios.get(`https://bdapis.herokuapp.com/api/v1.0/division/${division}`)
             .then((data) => setDistricts(data.data.data));
     }, [division]);
     useEffect(() => {

@@ -14,8 +14,11 @@ import {
 } from './loginHelper';
 import { formValidation } from '../../utilities/helperFunction';
 import { auth } from './firebaseConfig';
-import { useDispatch } from 'react-redux';
-import { google } from '../../redux/slice/auth.slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { google, signin } from '../../redux/slice/auth.slice';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import * as Yup from 'yup'
+import { clearMessage } from 'e:/26.10.2022/react-redux-login-example-master/react-redux-login-example-master/src/slices/message';
 
 // check is user logged in
 export const isLoggedIn = () => {
@@ -29,24 +32,10 @@ export const isLoggedIn = () => {
 };
 
 const Login = () => {
-    const [loggedInUser, setLoggedInUser] = useContext(LoginContext);
-    const [userAction, setUserAction] = useContext(UserActionContext); // ** Replacing  [newUser, setNewUser]
-    // const [id, setId] = useContext(IdContext); // ** Replacing  [newUser, setNewUser]
-    // const [newUser, setNewUser] = useState(false);
+    const [successful, setSuccessful] = useState(false);
     const dispatch = useDispatch()
-    const [user, setUser] = useState({
-        isSignedIn: false,
-        name: null,
-        email: null,
-        password: null,
-        cPassword: null,
-        tos: false,
-    });
-    const [errmessage, setErrMessage] = useState({
-        formErrors: {},
-        loginErrors: {},
-    });
-    const [error, setError] = useState("")
+    const { message } = useSelector((state) => state.messages)
+
     const history = useHistory();
     const location = useLocation();
 
@@ -64,66 +53,33 @@ const Login = () => {
 
     };
     //Handle Form Submit
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (formValidation(user, userAction.newUser, setErrMessage)) {
-
-            if (userAction.newUser && user.name && user.email && user.password) {
-                createNewUserWithEmailAndPassword(user)
-                    .then((res) => {
-                        handleResponse(res, true)
-                    })
-            }
-            if (!userAction.newUser && user.email && user.password) {
-                signInExistingUserWithEmailAndPassword(user)
-                    .then((res) => {
-                        handleResponse(res, true)
-                        // console.log(res)
-                    })
-            }
-        }
-    }
-    // Handle Response
-    const handleResponse = (res, redirect) => {
-        //console.log(res.error)
-        if (res.error) {
-            userAction.newUser && setError(res.error)
-            !userAction.newUser && setError(res.error)
-            redirect && history.replace(login);
-        } else {
-
-            setUser(res);
-            // console.log(res.user);
-            setLoggedInUser(res.user)
-            storeAuthToken(res);
-            redirect && history.replace(from);
-            userAction.newUser && setError('');
-            !userAction.newUser && setError('');
-
-        }
-    }
-
-    //Hangle Input Change
-    const handleInputChange = (e) => {
-        let newUserInfo = { ...user };
-        newUserInfo[e.target.name] = e.target.value;
-        setUser(newUserInfo);
-    }
-
-    //Store Auth Token
-    const storeAuthToken = (userInfo) => {
-        auth
-            .currentUser.getIdToken(/* forceRefresh */ true)
-            .then(function (idToken) {
-                sessionStorage.setItem('token', idToken);
-                history.replace(from);
+    const handleSubmit = (formValues) => {
+        console.log(formValues)
+        dispatch(signin(formValues))
+            .unwrap()
+            .then(() => {
+                setSuccessful(true);
+                setTimeout(() => {
+                    dispatch(clearMessage())
+                    history.push(from)
+                }, 2000);
             })
-            .catch(function (err) {
-                // Handle error
-                // console.log(err)
+            .catch(() => {
+                setSuccessful(false);
+                setTimeout(() => {
+                    dispatch(clearMessage())
+                }, 2000);
             });
-    };
+    }
 
+
+    const validationSchema = Yup.object().shape({
+        email: Yup.string()
+            .email('Invalid email address')
+            .required('Email is required'),
+        password: Yup.string()
+            .required("Password is required"),
+    })
     // console.log(userAction)
     return (
         <div className="login-section">
@@ -146,45 +102,58 @@ const Login = () => {
 
 
                     <div className="regular-log">
+                        {message && (
+                            <div className="form-group p-2">
+                                <div
+                                    className={
+                                        successful ? "alert alert-success" : "alert alert-danger"
+                                    }
+                                    role="alert"
+                                >
+                                    {message}
+                                </div>
+                            </div>
+                        )}
+                        <Formik
+                            initialValues={{ email: '', password: '' }}
+                            onSubmit={handleSubmit}
+                            validationSchema={validationSchema}
+                        >
+                            {
+                                ({ errors, touched }) => (
+                                    <Form autocomplete="off">
+                                        <div className="input-filds">
+                                            <label htmlFor="email">Email</label><br />
+                                            <Field
+                                                autocomplete="off"
+                                                type="text"
+                                                name="email"
+                                                id="email"
+                                                placeholder='example@domain.com' />
+                                            {
+                                                touched.email && errors.email ? (<div className="err-msg"><i class="far fa-exclamation-circle"></i> {errors.email}</div>) : ''
+                                            }
+                                        </div>
+                                        <div className="input-filds">
+                                            <label htmlFor="password">Password</label><br />
+                                            <Field
+                                                autocomplete="off"
+                                                type="password"
+                                                placeholder='password'
+                                                name="password"
+                                                id="password" />
+                                            {
+                                                touched.password && errors.password ? (<div className="err-msg"><i class="far fa-exclamation-circle"></i> {errors.password}</div>) : ''
+                                            }
+                                        </div>
+                                        <div className="single-fild">
+                                            <button type="submit" className="">Get started</button>
+                                        </div>
+                                    </Form>
+                                )
+                            }
 
-                        <form onSubmit={handleSubmit} autocomplete="off">
-                            {user != null && (
-                                <p style={{ maxWidth: '400px' }} className='text-danger'>
-                                    {/* * {user.error} */}
-                                    {error}
-                                </p>
-                            )}
-                            <div className="input-filds">
-                                <label htmlFor="email">Email</label><br />
-                                <input
-                                    autocomplete="off"
-                                    type="text"
-                                    name="email"
-                                    id="email"
-                                    placeholder='example@domain.com'
-                                    onChange={handleInputChange} />
-                                {errmessage.formErrors.email &&
-                                    <div className="err-msg"><i class="far fa-exclamation-circle"></i> {errmessage.formErrors.email}</div>
-                                }
-                            </div>
-                            <div className="input-filds">
-                                <label htmlFor="password">Password</label><br />
-                                <input
-                                    autocomplete="off"
-                                    type="password"
-                                    placeholder='password'
-                                    name="password"
-                                    id="password"
-                                    className={`${errmessage.formErrors.password ? 'showError' : ''}`}
-                                    onChange={handleInputChange} />
-                                {errmessage.formErrors.password &&
-                                    <div className="err-msg"><i class="far fa-exclamation-circle"></i> {errmessage.formErrors.password}</div>
-                                }
-                            </div>
-                            <div className="single-fild">
-                                <button type="submit" className="">Get started</button>
-                            </div>
-                        </form>
+                        </Formik>
                     </div>
                     <div class="auth-switch text-center pt-5">
                         No Account? Sign up <a class="text-link" href="/signup" >here</a>.

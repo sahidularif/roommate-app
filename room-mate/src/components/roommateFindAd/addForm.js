@@ -2,13 +2,8 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import DatePicker from "react-datepicker";
 import '../../styles/roomRegister.css';
 import "react-datepicker/dist/react-datepicker.css";
-import { MdApartment, MdHouseboat, MdHouse } from 'react-icons/md';
-import data from '../../data.json';
 import axios from 'axios';
-import { roomRentFirstStepValidation, roomRentSecondStepValidation } from '../../utilities/helperFunction';
-import Navbar from '../home/header/navBar';
 import { LoginContext } from '../../App';
-import UserProfileSection from './DashboarSideNav';
 
 //::::::::::::ROOMMATEFINDADD::::::::::::::
 const AddForm = () => {
@@ -221,15 +216,15 @@ const AddForm = () => {
         setFirstStep(current => ({ ...current, city: item }))
     }
     useEffect(() => {
-        axios.get('https://exuberant-cow-sheath-dress.cyclic.app/api/v1.0/divisions')
+        axios.get('https://bd-geolocation-api.cyclic.app/api/v1.0/divisions')
             .then((data) => setDivisions(data.data));
     }, []);
     useEffect(() => {
-        axios.get(`https://exuberant-cow-sheath-dress.cyclic.app/api/v1.0/districts/${division}`)
+        axios.get(`https://bd-geolocation-api.cyclic.app/api/v1.0/districts/${division}`)
             .then((data) => setDistricts(data.data));
     }, [division]);
     useEffect(() => {
-        axios.get(`https://exuberant-cow-sheath-dress.cyclic.app/api/v1.0/upazilas/${district}`)
+        axios.get(`https://bd-geolocation-api.cyclic.app/api/v1.0/upazilas/${district}`)
             .then((data) => setUpazilas(data.data));
     }, [district]);
     useEffect(() => {

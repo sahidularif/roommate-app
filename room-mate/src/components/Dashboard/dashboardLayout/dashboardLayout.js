@@ -3,9 +3,11 @@ import '../../../styles/roomRegister.css';
 import Navbar from '../../home/header/navBar';
 import DashboarSideNav from '../../roommateFindAd/DashboarSideNav';
 import { BsFillArrowRightCircleFill, BsArrowLeftCircleFill } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
 //::::::::::::ROOMMATEFINDADD::::::::::::::
 const DashboardLayout = (props) => {
     const [toggle, setToggle] = useState(false)
+    const {jwt} = useSelector((state)=>state.auth)
     return (
         <>
             <div className="">

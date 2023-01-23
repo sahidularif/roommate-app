@@ -4,15 +4,16 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import './App.css'
 import Login from "./components/login/login";
 import Home from "./pages/home";
 import PrivateRoute from "./routes/privateRoute/privateRoute";
 import RoommateFindAd from "./components/roommateFindAd/roommateFindAd";
-import RoomFindAd from "./components/roomFindAd/roomFindAd";
+// import RoomFindAd from "./components/roomFindAd/roomFindAd";
 import jwtDecode from "jwt-decode";
 import UserRedirect from "./components/login/userRedirect";
 import DashboardLayout from "./components/Dashboard/dashboardLayout/dashboardLayout";
-import AddListing from "./components/Dashboard/roomHolder/adsListing/adsListing";
+// import AddListing from "./components/Dashboard/roomHolder/adsListing/adsListing";
 import AdsListing from "./components/Dashboard/roomHolder/adsListing/adsListing";
 import EditRoom from "./components/HOC/EditRoom";
 import TanentAds from "./components/Dashboard/tanent/postAds/tanentAds";
@@ -21,11 +22,8 @@ import SingleRooms from "./pages/singleRooms";
 import Roommates from "./pages/roommates";
 import Roommate from "./pages/roommate";
 import UserProfile from "./components/Dashboard/dashboardLayout/userProfrile";
-import EditUserProfile from "./components/Dashboard/dashboardLayout/editUserProfile";
-import axios from "axios";
-
-import './App.css'
-import RoomAdd from "./components/roommateFindAd/roomAdd";
+import EditUserProfile from "./components/Dashboard/dashboardLayout/editUserProfile"
+// import RoomAdd from "./components/roommateFindAd/roomAdd";
 import AddForm from "./components/roommateFindAd/addForm";
 import Signup from "./components/login/Signup";
 export const LoginContext = createContext();
@@ -95,13 +93,6 @@ function App() {
                 <Route exact path="/signup">
                   <Signup />
                 </Route>
-                {/* <Route exact path="/roommateFind">
-                  <RoommateFindAd />
-                </Route> */}
-            
-                {/* <PrivateRoute exact path="/roomFind">
-                  <RoomFindAd />
-                </PrivateRoute> */}
                 <PrivateRoute exact path="/tanentAds">
                   <TanentAds />
                 </PrivateRoute>
@@ -120,11 +111,6 @@ function App() {
                     <RoommateFindAd />
                   </DashboardLayout>
                 </Route>
-                {/* <Route exact path="/dashboard">
-                  <DashboardLayout>
-                    <AdsListing />
-                  </DashboardLayout>
-                </Route> */}
                 <Route exact path="/edit/:_id">
                   <EditRoom />
                 </Route>

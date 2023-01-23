@@ -1,18 +1,29 @@
-import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import jwtDecode from 'jwt-decode';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
-import { LoginContext, UserActionContext } from '../../App';
-import { isLoggedIn } from '../../utilities/helperFunction';
 //   =====================================================================================
 const PrivateRoute = ({ children, ...rest }) => {
-    const { user, jwt } = useSelector((state) => state.auth)
+    const { jwt } = useSelector(
+        (state) => state.auth
+    );
+
+    const isValidJWT = () => {
+        const token = sessionStorage.getItem('token');
+        if (!jwt) return false;
+        const decodedToken = jwtDecode(token);
+        const jwtExpirationMs = decodedToken.exp * 1000;
+        return decodedToken.exp > jwtExpirationMs;
+    }
+    useEffect(() => {
+        if (!jwt && !isValidJWT) return;
+    }, [])
 
     return (
         <Route
             {...rest}
             render={({ location }) =>
-                (user?.email || jwt) ? (
+                (jwt && isValidJWT) ? (
                     children
                 ) : (
                     <Redirect

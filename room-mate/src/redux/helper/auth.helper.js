@@ -8,12 +8,12 @@ provider.setCustomParameters({
   });
 //Base Url
 // const API_URL = "https://gleaming-puce-pullover.cyclic.app/auth/"
-const API_URL = "http://localhost:4000/api/v1.0/auth/"
+const API_URL = "https://determined-shift-tick.cyclic.app/api/v1.0/auth/"
 
 // User Registration
 const register = async (newUser) => {
     const response = await axios.post(API_URL + "register", newUser);
-
+    console.log(response)
     return response.data;
 };
 
@@ -21,7 +21,7 @@ const register = async (newUser) => {
 // User Login
 const login = async (user) => {
     const response = await axios.post(API_URL + "login", user);
-
+console.log(response)
     if (response.data) {
         localStorage.setItem('jwt', JSON.stringify(response.data.token));
         // console.log(response.data)
@@ -74,16 +74,12 @@ const logout = () => {
 // Jwt Verification
 const verifyJwt = async (jwt) => {
     const response = await axios.post(
-        `API_URL/verify-jwt`,
+        `API_URL/verifyJWT`,
         { jwt }
     );
-
+        console.log(response);
     if (response.data) {
         const jwtExpirationMs = response.data.exp * 1000;
-        if (jwtExpirationMs < Date.now()) {
-            localStorage.removeItem('jwt')
-            localStorage.removeItem('user')
-        }
         return jwtExpirationMs > Date.now();
     }
 

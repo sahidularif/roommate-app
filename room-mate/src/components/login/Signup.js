@@ -3,8 +3,7 @@ import React, { useContext, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import '../../styles/login.css';
 import { FaGoogle, FaFacebook, FaTwitter } from 'react-icons/fa';
-import { LoginContext, UserActionContext } from '../../App';
-import { useHistory, useLocation } from 'react-router';
+import { Redirect, useHistory, useLocation } from 'react-router';
 import {
     checkSessionUser,
     checkUserType,
@@ -12,12 +11,12 @@ import {
     handleGoogleSignIn,
     signInExistingUserWithEmailAndPassword
 } from './loginHelper';
-import { formValidation } from '../../utilities/helperFunction';
 import { auth } from './firebaseConfig';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../redux/slice/auth.slice';
+import { clearMessage } from '../../redux/slice/messages';
 
 // check is user logged in
 export const isLoggedIn = () => {
@@ -36,7 +35,8 @@ const Signup = () => {
     const dispatch = useDispatch()
     const history = useHistory();
     const location = useLocation();
-    const {message} = useSelector((state)=>state.messages)
+    const { message } = useSelector((state) => state.messages)
+    const [successful, setSuccessful] = useState(false);
     //Handle Google Sign in
     const googleSignin = () => {
         handleGoogleSignIn().then((res) => {
@@ -63,10 +63,24 @@ const Signup = () => {
             .required("Confirm password is required"),
 
     });
+
     // console.log(userAction)
     const handleRegister = (values) => {
         console.log(values);
         dispatch(register(values))
+            .unwrap()
+            .then(() => {
+                setSuccessful(true);
+                history.push('/login')
+              
+            })
+            .catch(() => {
+                setSuccessful(false);
+                setTimeout(() => {
+                    dispatch(clearMessage())
+                }, 1000);
+            });
+
     }
     return (
         <div className="login-section">
@@ -88,6 +102,18 @@ const Signup = () => {
 
 
                     <div className="regular-log">
+                        {message && (
+                            <div className="form-group p-2">
+                                <div
+                                    className={
+                                        successful ? "alert alert-success" : "alert alert-danger"
+                                    }
+                                    role="alert"
+                                >
+                                    {message}
+                                </div>
+                            </div>
+                        )}
                         <Formik
                             onSubmit={handleRegister}
                             initialValues={initialState}
